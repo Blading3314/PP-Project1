@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.MainController">
    <children>
       <TabPane layoutY="-2.0" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
@@ -23,20 +23,19 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView prefHeight="258.0" prefWidth="600.0">
+                        <TableView fx:id="Table" prefHeight="258.0" prefWidth="600.0">
                           <columns>
-                            <TableColumn prefWidth="75.0" text="ID" />
-                            <TableColumn prefWidth="75.0" text="FirstName" />
-                              <TableColumn prefWidth="75.0" text="LastName" />
-                              <TableColumn prefWidth="98.0" text="PhoneNumber" />
-                              <TableColumn prefWidth="52.0" text="Email" />
+                            <TableColumn fx:id="coID" prefWidth="75.0" text="ID" />
+                            <TableColumn fx:id="coFN" prefWidth="75.0" text="FirstName" />
+                              <TableColumn fx:id="coLN" prefWidth="75.0" text="LastName" />
+                              <TableColumn fx:id="coPN" prefWidth="98.0" text="PhoneNumber" />
+                              <TableColumn fx:id="coE" prefWidth="52.0" text="Email" />
                           </columns>
                         </TableView>
-                        <Button layoutX="14.0" layoutY="265.0" mnemonicParsing="false" text="Display" />
+                        <Button layoutX="14.0" layoutY="265.0" mnemonicParsing="false" onAction="#Display" text="Display" />
                      </children></AnchorPane>
             </content>
-          </Tab>\
-
+          </Tab>
         </tabs>
       </TabPane>
    </children>
