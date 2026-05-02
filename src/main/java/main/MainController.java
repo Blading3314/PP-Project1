@@ -39,7 +39,7 @@ public class MainController {
             }
         });
 
-        loadCustomers(); // 🔥 THIS MUST BE HERE
+        loadCustomers();
     }
     private void loadCustomers() {
         List<Customer> customers = dao.getAllCustomers();
