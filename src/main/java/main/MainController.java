@@ -6,13 +6,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import Customer.*;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import util.DBConnectionUtility;
 import javafx.scene.control.ListCell;
 import javafx.scene.layout.*;
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.util.List;
 import javafx.scene.control.ListView;
 
