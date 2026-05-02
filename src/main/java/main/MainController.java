@@ -14,11 +14,12 @@ import javafx.scene.layout.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.List;
+import javafx.scene.control.ListView;
 
 public class MainController {
 
     @FXML
-    private javafx.scene.control.ListView<Customer> customerList;
+    private ListView<Customer> customerList;
 
     private CustomerDAO dao;
 
