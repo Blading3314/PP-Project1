@@ -4,39 +4,24 @@
 <?import javafx.scene.layout.*?>
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.MainController">
-   <children>
-      <TabPane layoutY="-2.0" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
-        <tabs>
-          <Tab text="Login">
-            <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <Button layoutX="14.0" layoutY="90.0" mnemonicParsing="false" text="Login" />
-                        <Label layoutX="12.0" layoutY="21.0" text="Usename" />
-                        <Label layoutX="12.0" layoutY="59.0" text="Password" />
-                        <TextField layoutX="70.0" layoutY="17.0" />
-                        <PasswordField layoutX="70.0" layoutY="55.0" />
-                     </children></AnchorPane>
-            </content>
-          </Tab>
-          <Tab text="Customer">
-            <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <TableView fx:id="Table" prefHeight="258.0" prefWidth="600.0">
-                          <columns>
-                            <TableColumn fx:id="coID" prefWidth="75.0" text="ID" />
-                            <TableColumn fx:id="coFN" prefWidth="75.0" text="FirstName" />
-                              <TableColumn fx:id="coLN" prefWidth="75.0" text="LastName" />
-                              <TableColumn fx:id="coPN" prefWidth="98.0" text="PhoneNumber" />
-                              <TableColumn fx:id="coE" prefWidth="52.0" text="Email" />
-                          </columns>
-                        </TableView>
-                        <Button layoutX="14.0" layoutY="265.0" mnemonicParsing="false" onAction="#Display" text="Display" />
-                     </children></AnchorPane>
-            </content>
-          </Tab>
-        </tabs>
-      </TabPane>
-   </children>
+    <TabPane layoutY="-2.0" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
+        <Tab text="Login">
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                <Button layoutX="14.0" layoutY="90.0" mnemonicParsing="false" text="Login" />
+                <Label layoutX="12.0" layoutY="21.0" text="Usename" />
+                <Label layoutX="12.0" layoutY="59.0" text="Password" />
+                <TextField layoutX="70.0" layoutY="17.0" />
+                <PasswordField layoutX="70.0" layoutY="55.0" />
+            </AnchorPane>
+        </Tab>
+        <Tab text="Customer">
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                <Button layoutX="470.0" layoutY="21.0" mnemonicParsing="false" text="Create Customer" />
+                <Button layoutX="37.0" layoutY="298.0" mnemonicParsing="false" text="Delete" />
+                <ListView fx:id="customerList" layoutY="57.0" prefHeight="200.0" prefWidth="600.0" />
+                <ChoiceBox layoutX="98.0" layoutY="21.0" prefHeight="25.0" prefWidth="327.0" />
+            </AnchorPane>
+        </Tab>
+    </TabPane>
+    <AnchorPane layoutX="-240.0" layoutY="173.0" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
 </AnchorPane>

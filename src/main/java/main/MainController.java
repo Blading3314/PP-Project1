@@ -9,7 +9,8 @@ import Customer.*;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import util.DBConnectionUtility;
-
+import javafx.scene.control.ListCell;
+import javafx.scene.layout.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.List;
@@ -17,34 +18,54 @@ import java.util.List;
 public class MainController {
 
     @FXML
-    private TableView<Customer> Table;
-    @FXML
-    private TableColumn<Customer, Integer> coID;
-    @FXML
-    private TableColumn<Customer, String> coFN;
-    @FXML
-    private TableColumn<Customer, String> coLN;
-    @FXML
-    private TableColumn<Customer, String> coPN;
-    @FXML
-    private TableColumn<Customer, String> coE;
+    private javafx.scene.control.ListView<Customer> customerList;
 
     private CustomerDAO dao;
 
     @FXML
     public void initialize() {
-        coID.setCellValueFactory(data -> new javafx.beans.property.SimpleIntegerProperty(data.getValue().getCustomerID()).asObject());
-        coFN.setCellValueFactory(data -> new javafx.beans.property.SimpleStringProperty(data.getValue().getFirstName()));
-        coLN.setCellValueFactory(data -> new javafx.beans.property.SimpleStringProperty(data.getValue().getLastName()));
-        coPN.setCellValueFactory(data -> new javafx.beans.property.SimpleStringProperty(data.getValue().getPhoneNumber()));
-        coE.setCellValueFactory(data -> new javafx.beans.property.SimpleStringProperty(data.getValue().getEmail()));
         dao = new CustomerDAOImpl();
 
+        customerList.setCellFactory(listView -> new ListCell<Customer>() {
+            @Override
+            protected void updateItem(Customer c, boolean empty) {
+                super.updateItem(c, empty);
+
+                if (empty || c == null) {
+                    setGraphic(null);
+                } else {
+                    setGraphic(createCard(c));
+                }
+            }
+        });
+
+        loadCustomers(); // 🔥 THIS MUST BE HERE
+    }
+    private void loadCustomers() {
+        List<Customer> customers = dao.getAllCustomers();
+        ObservableList<Customer> list = FXCollections.observableArrayList(customers);
+        customerList.setItems(list);
+    }
+    private HBox createCard(Customer c) {
+        HBox card = new HBox(20);
+        card.setStyle("-fx-padding: 10; -fx-border-color: lightgray; -fx-background-color: white;");
+
+        Label name = new Label(c.getFirstName() + " " + c.getLastName());
+        Label email = new Label(c.getEmail());
+
+        VBox left = new VBox(5, name, email);
+
+        Label phone = new Label(c.getPhoneNumber());
+        Label id = new Label("ID: " + c.getCustomerID());
+
+        VBox right = new VBox(5, phone, id);
+
+        Pane spacer = new Pane();
+        HBox.setHgrow(spacer, Priority.ALWAYS);
+
+        card.getChildren().addAll(left, spacer, right);
+
+        return card;
     }
 
-    @FXML
-    private void Display() {
-        List<Customer> customers = dao.getAllCustomers();
-        Table.setItems(FXCollections.observableArrayList(customers));
-    }
 }
