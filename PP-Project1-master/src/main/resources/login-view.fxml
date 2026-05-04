@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="520.0" prefWidth="820.0" style="-fx-background-color: linear-gradient(to bottom right, #fff7ed, #681111);" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.LoginController">
+
+    <children>
+        <StackPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+
+            <HBox maxHeight="430.0" maxWidth="740.0" style="-fx-background-color: #ffffff; -fx-background-radius: 26; -fx-effect: dropshadow(gaussian, rgba(124,45,18,0.25), 30, 0, 0, 12);">
+
+                <children>
+                    <VBox alignment="CENTER" prefWidth="320.0" spacing="16.0" style="-fx-background-color: linear-gradient(to bottom right, #23221f, #681111, #27231e); -fx-background-radius: 26 0 0 26;">
+
+                        <padding>
+                            <Insets bottom="34.0" left="30.0" right="30.0" top="34.0" />
+                        </padding>
+
+                        <children>
+                            <Label text="🛒" textFill="WHITE">
+                                <font>
+                                    <Font size="58.0" />
+                                </font>
+                            </Label>
+
+                            <Label style="-fx-font-weight: bold;" text="Store Manager" textFill="WHITE">
+                                <font>
+                                    <Font size="30.0" />
+                                </font>
+                            </Label>
+
+                            <Label alignment="CENTER" text="Sign in to open the register, manage stock, track orders, and serve customers faster." textAlignment="CENTER" textFill="#ffffff"
+                                   wrapText="true">
+                                <font>
+                                    <Font size="14.0" />
+                                </font>
+                            </Label>
+
+                            <Region prefHeight="14.0" />
+
+                            <VBox alignment="CENTER" spacing="9.0" style="-fx-background-color: rgba(255,255,255,0.18); -fx-background-radius: 18; -fx-padding: 18;">
+
+                                <children>
+
+                                    <Label text="Inventory • Customers • Sales" textFill="#ffffff">
+                                        <font>
+                                            <Font size="13.0" />
+                                        </font>
+                                    </Label>
+                                </children>
+                            </VBox>
+
+                            <HBox alignment="CENTER" spacing="8.0">
+                                <children>
+                                    <Circle fill="#ffffff" radius="5.0" />
+                                    <Circle fill="#ff0d01" radius="5.0" />
+                                    <Circle fill="#681111" radius="5.0" />
+                                </children>
+                            </HBox>
+                        </children>
+                    </VBox>
+
+                    <VBox alignment="CENTER_LEFT" prefWidth="420.0" spacing="15.0" style="-fx-background-color: #ffffff; -fx-background-radius: 0 26 26 0;">
+
+                        <padding>
+                            <Insets bottom="40.0" left="48.0" right="48.0" top="40.0" />
+                        </padding>
+
+                        <children>
+                            <Label style="-fx-font-weight: bold;" text="Employee Login" textFill="#7c2d12">
+                                <font>
+                                    <Font size="31.0" />
+                                </font>
+                            </Label>
+
+                            <Label text="Access your store dashboard" textFill="#681111">
+                                <font>
+                                    <Font size="14.0" />
+                                </font>
+                            </Label>
+
+                            <Region prefHeight="8.0" />
+
+                            <VBox spacing="7.0">
+                                <children>
+                                    <Label style="-fx-font-weight: bold;" text="Employee ID" textFill="#431407" />
+
+                                    <TextField fx:id="usernameField" prefHeight="43.0" promptText="Enter employee ID" style="-fx-background-color: #fff7ed; -fx-background-radius: 12; -fx-border-color: #832216; -fx-border-radius: 12; -fx-padding: 0 14 0 14;" />
+                                </children>
+                            </VBox>
+
+                            <VBox spacing="7.0">
+                                <children>
+                                    <Label style="-fx-font-weight: bold;" text="Password" textFill="#431407" />
+
+                                    <PasswordField fx:id="passwordField" prefHeight="43.0" promptText="Enter password" style="-fx-background-color: #fff7ed; -fx-background-radius: 12; -fx-border-color: #832216; -fx-border-radius: 12; -fx-padding: 0 14 0 14;" />
+                                </children>
+                            </VBox>
+
+                            <HBox alignment="CENTER_LEFT">
+                                <children>
+
+                                    <Region HBox.hgrow="ALWAYS" />
+                                </children>
+                            </HBox>
+
+                            <Button fx:id="loginButton" maxWidth="Infinity" prefHeight="46.0" style="-fx-background-color: linear-gradient(to right, #000000, #681111); -fx-background-radius: 13; -fx-text-fill: white; -fx-font-size: 15px; -fx-font-weight: bold; -fx-cursor: hand;" text="Login" />
+
+                            <Label fx:id="messageLabel" text="" textFill="#681111" wrapText="true" />
+
+                            <HBox alignment="CENTER" spacing="4.0" />
+                        </children>
+                    </VBox>
+                </children>
+            </HBox>
+        </StackPane>
+    </children>
+</AnchorPane>
