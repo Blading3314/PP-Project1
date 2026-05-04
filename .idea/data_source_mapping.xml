@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourcePerFileMappings">
+    <file url="file://$APPLICATION_CONFIG_DIR$/consoles/db/2820d557-72fc-4ab2-a1df-bda01a25b266/console.sql" value="2820d557-72fc-4ab2-a1df-bda01a25b266" />
+    <file url="file://$PROJECT_DIR$/PP-Project1-master/src/main/java/Customer/CustomerDAOImpl.java" value="2820d557-72fc-4ab2-a1df-bda01a25b266" />
+    <file url="file://$PROJECT_DIR$/PP-Project1-master/src/main/java/Employee/EmployeeDAOImpl.java" value="2820d557-72fc-4ab2-a1df-bda01a25b266" />
+  </component>
+</project>

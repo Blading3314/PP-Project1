@@ -13,7 +13,7 @@ public class CustomerDAOImpl implements CustomerDAO{
         String firstName = rs.getString("firstName");
         String lastName = rs.getString("lastName");
         String phoneNumber = rs.getString("phoneNumber");
-        String email = rs.getString("email");
+        String email = rs.getString("Email");
         return new Customer(customerID, firstName, lastName, phoneNumber, email);
     }
     @Override
@@ -86,7 +86,7 @@ public class CustomerDAOImpl implements CustomerDAO{
 
     @Override
     public Optional<Customer> getCustomersByEmail(String email) {
-        String sql = "SELECT * FROM Customer WHERE email = ?";
+        String sql = "SELECT * FROM Customer WHERE Email = ?";
         try (Connection conn = DBConnectionUtility.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)){
             ps.setString(1, email);
@@ -134,11 +134,14 @@ public class CustomerDAOImpl implements CustomerDAO{
     @Override
     public void updateCustomer(Customer customer)
     {
-        String sql = "UPDATE Customer SET PhoneNumber=? WHERE customerID = ?";
+        String sql = "UPDATE Customer SET firstName=?, lastName=?, phoneNumber=?, Email=? WHERE customerID = ?";
         try (Connection conn = DBConnectionUtility.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)){
-            ps.setString(1, customer.getPhoneNumber());
-            ps.setInt(2, customer.getCustomerID());
+            ps.setString(1, customer.getFirstName());
+            ps.setString(2, customer.getLastName());
+            ps.setString(3, customer.getPhoneNumber());
+            ps.setString(4, customer.getEmail());
+            ps.setInt(5, customer.getCustomerID());
             ps.executeUpdate();
         }
         catch (SQLException e) {
@@ -149,7 +152,7 @@ public class CustomerDAOImpl implements CustomerDAO{
 
     @Override
     public void saveCustomer(Customer customer) {
-        String sql = "INSERT INTO Customer (firstName, lastName, phoneNumber, email) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO Customer (firstName, lastName, phoneNumber, Email) VALUES (?, ?, ?, ?)";
         try (Connection conn = DBConnectionUtility.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql)){
             ps.setString(1, customer.getFirstName());

@@ -2,14 +2,23 @@ package Comic;
 
 public class Comic {
     private int comicID;
-    private String Name;
-    private String Issue;
-    private String Publisher;
-    public Comic(int comicID, String Name, String Issue, String Publisher) {
+    private String name;
+    private String issue;
+    private String publisher;
+    private double price;
+    private int stock;
+
+    public Comic(int comicID, String name, String issue, String publisher) {
+        this(comicID, name, issue, publisher, 0.0, 0);
+    }
+
+    public Comic(int comicID, String name, String issue, String publisher, double price, int stock) {
         this.comicID = comicID;
-        this.Name = Name;
-        this.Issue = Issue;
-        this.Publisher = Publisher;
+        this.name = name;
+        this.issue = issue;
+        this.publisher = publisher;
+        this.price = price;
+        this.stock = stock;
     }
 
     public int getComicID() {
@@ -19,33 +28,54 @@ public class Comic {
     public void setComicID(int comicID) {
         this.comicID = comicID;
     }
+
     public String getName() {
-        return Name;
+        return name;
     }
+
     public void setName(String name) {
-        Name = name;
+        this.name = name;
     }
 
     public String getPublisher() {
-        return Publisher;
+        return publisher;
     }
 
     public void setPublisher(String publisher) {
-        Publisher = publisher;
+        this.publisher = publisher;
     }
 
     public String getIssue() {
-        return Issue;
+        return issue;
     }
 
     public void setIssue(String issue) {
-        Issue = issue;
+        this.issue = issue;
     }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public int getStock() {
+        return stock;
+    }
+
+    public void setStock(int stock) {
+        this.stock = stock;
+    }
+
     @Override
-    public String toString(){
-        return "Comic.Comic ID: " + comicID +
-                "\n" + "Name: " + Name +
-                "\n" + "Issue: " + Issue +
-                "\n" + "Publisher: " + Publisher;
+    public String toString() {
+        return "Comic ID: " + comicID
+                + "\nTitle: " + name
+                + "\nIssue: " + issue
+                + "\nPublisher: " + publisher
+                + "\nPrice: " + price
+                + "\nStock: " + stock;
     }
 }

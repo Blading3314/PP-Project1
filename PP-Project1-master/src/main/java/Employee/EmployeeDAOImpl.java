@@ -1,32 +1,47 @@
 package Employee;
+
 import util.DBConnectionUtility;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.sql.*;
-import java.util.ArrayList;
-public class EmployeeDAOImpl implements EmployeeDAO{
-    private String dbUrl = "jdbc:sqlite:test.db";
-    private Employee extractEmployeeFromResultSet(ResultSet rs) throws SQLException{
-        int employeeID = rs.getInt("employeeID");
-        String firstName = rs.getString("firstName");
-        String lastName = rs.getString("lastName");
-        String phoneNumber = rs.getString("phoneNumber");
-        String email = rs.getString("email");
-        return new Employee(employeeID, firstName, lastName, phoneNumber, email);
+
+public class EmployeeDAOImpl implements EmployeeDAO {
+
+    private static final String SELECT_PUBLIC = """
+            SELECT employeeID, firstName, lastName, phoneNumber, email
+            FROM Employee
+            """;
+
+    private Employee extractPublic(ResultSet rs) throws SQLException {
+        return new Employee(
+                rs.getInt("employeeID"),
+                nullToEmpty(rs.getString("firstName")),
+                nullToEmpty(rs.getString("lastName")),
+                nullToEmpty(rs.getString("phoneNumber")),
+                nullToEmpty(rs.getString("email")));
+    }
+
+    private static String nullToEmpty(String s) {
+        return s == null ? "" : s;
     }
 
     @Override
     public Optional<Employee> getEmployeeById(int employeeID) {
-        String sql = "SELECT * FROM Employee WHERE employeeID = ?";
-        try (Connection conn = DriverManager.getConnection(sql);
-        PreparedStatement pstmt = conn.prepareStatement(sql)){
-            pstmt.setInt(1, employeeID);
-            ResultSet rs = pstmt.executeQuery();
-            if (rs.next()){
-                return Optional.of(extractEmployeeFromResultSet(rs));
+        String sql = SELECT_PUBLIC + " WHERE employeeID = ?";
+        try (Connection conn = DBConnectionUtility.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, employeeID);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return Optional.of(extractPublic(rs));
             }
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
         return Optional.empty();
@@ -35,12 +50,11 @@ public class EmployeeDAOImpl implements EmployeeDAO{
     @Override
     public List<Employee> getAllEmployees() {
         List<Employee> employees = new ArrayList<>();
-        String sql = "SELECT * FROM Employee";
-        try (Connection conn = DriverManager.getConnection(dbUrl);
+        try (Connection conn = DBConnectionUtility.getConnection();
              Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(sql)){
-            while (rs.next()){
-                employees.add(extractEmployeeFromResultSet(rs));
+             ResultSet rs = stmt.executeQuery(SELECT_PUBLIC)) {
+            while (rs.next()) {
+                employees.add(extractPublic(rs));
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -50,18 +64,16 @@ public class EmployeeDAOImpl implements EmployeeDAO{
 
     @Override
     public List<Employee> getEmployeesByFirstName(String firstName) {
-        List <Employee> employees = new ArrayList<>();
-        String sql = "SELECT * FROM Employee WHERE firstName = ?";
-        try(Connection conn = DriverManager.getConnection(dbUrl);
-            PreparedStatement ps = conn.prepareStatement(sql)) {
+        List<Employee> employees = new ArrayList<>();
+        String sql = SELECT_PUBLIC + " WHERE firstName = ?";
+        try (Connection conn = DBConnectionUtility.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, firstName);
             ResultSet rs = ps.executeQuery();
-            while (rs.next()){
-                employees.add(extractEmployeeFromResultSet(rs));
+            while (rs.next()) {
+                employees.add(extractPublic(rs));
             }
-
-        }
-        catch (SQLException e){
+        } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
         return employees;
@@ -69,18 +81,16 @@ public class EmployeeDAOImpl implements EmployeeDAO{
 
     @Override
     public List<Employee> getEmployeesByLastName(String lastName) {
-        List <Employee> employees = new ArrayList<>();
-        String sql = "SELECT * FROM Employee WHERE lastName = ?";
-        try(Connection conn = DriverManager.getConnection(dbUrl);
-            PreparedStatement ps = conn.prepareStatement(sql)) {
+        List<Employee> employees = new ArrayList<>();
+        String sql = SELECT_PUBLIC + " WHERE lastName = ?";
+        try (Connection conn = DBConnectionUtility.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, lastName);
             ResultSet rs = ps.executeQuery();
-            while (rs.next()){
-                employees.add(extractEmployeeFromResultSet(rs));
+            while (rs.next()) {
+                employees.add(extractPublic(rs));
             }
-
-        }
-        catch (SQLException e){
+        } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
         return employees;
@@ -89,32 +99,27 @@ public class EmployeeDAOImpl implements EmployeeDAO{
     @Override
     public void deleteEmployeeByID(int employeeID) {
         String sql = "DELETE FROM Employee WHERE employeeID = ?";
-        try (Connection conn = DriverManager.getConnection(dbUrl);
-             PreparedStatement ps = conn.prepareStatement(sql)){
+        try (Connection conn = DBConnectionUtility.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, employeeID);
             ps.executeUpdate();
-        }
-        catch (SQLException e){
+        } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-
     }
 
     @Override
     public void updateEmployee(Employee employee) {
-        String sql = "UPDATE Employee " +
-                "SET firstName = ?, lastName = ?, " +
-                "phoneNumber = ?, email = ? WHERE employeeID = ?";
+        String sql = "UPDATE Employee SET firstName = ?, lastName = ?, phoneNumber = ?, email = ? WHERE employeeID = ?";
         try (Connection conn = DBConnectionUtility.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)){
-            ps.setString(1, employee.getFirstName());
-            ps.setString(2, employee.getLastName());
-            ps.setString(3, employee.getPhoneNumber());
-            ps.setString(4, employee.getEmail());
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, nullToEmpty(employee.getFirstName()));
+            ps.setString(2, nullToEmpty(employee.getLastName()));
+            ps.setString(3, nullToEmpty(employee.getPhoneNumber()));
+            ps.setString(4, nullToEmpty(employee.getEmail()));
             ps.setInt(5, employee.getEmployeeID());
             ps.executeUpdate();
-        }
-        catch (SQLException e){
+        } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
     }
@@ -123,14 +128,13 @@ public class EmployeeDAOImpl implements EmployeeDAO{
     public void saveEmployee(Employee employee) {
         String sql = "INSERT INTO Employee (firstName, lastName, phoneNumber, email) VALUES (?, ?, ?, ?)";
         try (Connection conn = DBConnectionUtility.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)){
-            ps.setString(1, employee.getFirstName());
-            ps.setString(2, employee.getLastName());
-            ps.setString(3, employee.getPhoneNumber());
-            ps.setString(4, employee.getEmail());
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, nullToEmpty(employee.getFirstName()));
+            ps.setString(2, nullToEmpty(employee.getLastName()));
+            ps.setString(3, nullToEmpty(employee.getPhoneNumber()));
+            ps.setString(4, nullToEmpty(employee.getEmail()));
             ps.executeUpdate();
-        }
-        catch (SQLException e){
+        } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
     }

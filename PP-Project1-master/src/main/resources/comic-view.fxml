@@ -9,94 +9,92 @@
     <children>
         <VBox spacing="15" AnchorPane.bottomAnchor="10" AnchorPane.leftAnchor="10" AnchorPane.rightAnchor="10" AnchorPane.topAnchor="10">
 
-            <!-- HEADER -->
             <HBox alignment="CENTER_LEFT" spacing="20" style="-fx-background-color: linear-gradient(to right, #000000, #681111); -fx-background-radius: 14; -fx-padding: 15;">
-
                 <children>
-                    <Label style="-fx-font-weight: bold;" text="Inventory Management" textFill="WHITE">
+                    <Label style="-fx-font-weight: bold;" text="Comic inventory" textFill="WHITE">
                         <font><Font size="20" /></font>
                     </Label>
-
                     <Region HBox.hgrow="ALWAYS" />
-
-                    <Label text="Manage comic stock and pricing" textFill="WHITE" />
+                    <Label text="Titles, issues, shelf stock, and list price" textFill="WHITE" />
                 </children>
             </HBox>
 
-            <!-- FORM -->
             <GridPane hgap="12" style="-fx-background-color: white; -fx-background-radius: 14; -fx-padding: 15;" vgap="10">
-
                 <columnConstraints>
+                    <ColumnConstraints percentWidth="20" />
                     <ColumnConstraints percentWidth="25" />
-                    <ColumnConstraints percentWidth="25" />
-                    <ColumnConstraints percentWidth="25" />
-                    <ColumnConstraints percentWidth="25" />
+                    <ColumnConstraints percentWidth="20" />
+                    <ColumnConstraints percentWidth="17" />
+                    <ColumnConstraints percentWidth="18" />
                 </columnConstraints>
-
                 <children>
-                    <Label text="Title" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-                    <TextField fx:id="titleField" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                    <Label text="Comic ID" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                    <TextField fx:id="idField" editable="false" promptText="— select a row —" GridPane.columnIndex="0" GridPane.rowIndex="1" />
 
-                    <Label text="Author" GridPane.columnIndex="1" GridPane.rowIndex="0" />
-                    <TextField fx:id="authorField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                    <Label text="Title" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                    <TextField fx:id="titleField" promptText="The Crimson Horizon" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
-                    <Label text="Price" GridPane.columnIndex="2" GridPane.rowIndex="0" />
-                    <TextField fx:id="priceField" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                    <Label text="Issue (# or arc)" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+                    <TextField fx:id="issueField" promptText="#12" GridPane.columnIndex="2" GridPane.rowIndex="1" />
 
-                    <Label text="Stock" GridPane.columnIndex="3" GridPane.rowIndex="0" />
-                    <TextField fx:id="stockField" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                    <Label text="Publisher" GridPane.columnIndex="3" GridPane.rowIndex="0" />
+                    <TextField fx:id="publisherField" promptText="Image Comics" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+
+                    <Label text="List price (USD)" GridPane.columnIndex="4" GridPane.rowIndex="0" />
+                    <TextField fx:id="priceField" promptText="19.99" GridPane.columnIndex="4" GridPane.rowIndex="1" />
                 </children>
-            <rowConstraints>
-               <RowConstraints />
-               <RowConstraints />
-            </rowConstraints>
+                <rowConstraints>
+                    <RowConstraints />
+                    <RowConstraints />
+                </rowConstraints>
             </GridPane>
 
-            <!-- SEARCH -->
-            <HBox spacing="10" style="-fx-background-color: white; -fx-background-radius: 14; -fx-padding: 12;">
-
+            <GridPane hgap="12" style="-fx-background-color: white; -fx-background-radius: 14; -fx-padding: 15;" vgap="6">
+                <columnConstraints>
+                    <ColumnConstraints percentWidth="25" />
+                    <ColumnConstraints hgrow="ALWAYS" percentWidth="75" />
+                </columnConstraints>
                 <children>
-                    <TextField fx:id="searchField" promptText="Search comics..." style="-fx-background-color: #fff7ed; -fx-background-radius: 10; -fx-border-color: #832216; -fx-border-radius: 10;" HBox.hgrow="ALWAYS" />
+                    <Label text="Copies in stock" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                    <TextField fx:id="stockField" promptText="0" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                </children>
+                <rowConstraints>
+                    <RowConstraints />
+                    <RowConstraints />
+                </rowConstraints>
+            </GridPane>
 
+            <HBox spacing="10" style="-fx-background-color: white; -fx-background-radius: 14; -fx-padding: 12;">
+                <children>
+                    <TextField fx:id="searchField" promptText="Search title, issue, publisher…" style="-fx-background-color: #fff7ed; -fx-background-radius: 10; -fx-border-color: #832216; -fx-border-radius: 10;" HBox.hgrow="ALWAYS" />
                     <Button fx:id="searchButton" style="-fx-background-color: linear-gradient(to right, #000000, #681111); -fx-text-fill: white; -fx-background-radius: 10;" text="Search" />
-
                     <Button fx:id="clearButton" style="-fx-background-color: #fff7ed; -fx-border-color: #832216; -fx-border-radius: 10;" text="Clear" />
                 </children>
             </HBox>
 
-            <!-- TABLE -->
             <TableView fx:id="comicTable" style="-fx-background-radius: 12; -fx-border-color: #832216; -fx-border-radius: 12;" VBox.vgrow="ALWAYS">
-
                 <columns>
-                    <TableColumn fx:id="idColumn" prefWidth="70" text="ID" />
-                    <TableColumn fx:id="titleColumn" prefWidth="200" text="Title" />
-                    <TableColumn fx:id="authorColumn" prefWidth="150" text="Author" />
-                    <TableColumn fx:id="priceColumn" prefWidth="100" text="Price" />
-                    <TableColumn fx:id="stockColumn" prefWidth="100" text="Stock" />
+                    <TableColumn fx:id="idColumn" prefWidth="60" text="ID" />
+                    <TableColumn fx:id="titleColumn" prefWidth="220" text="Title" />
+                    <TableColumn fx:id="issueColumn" prefWidth="90" text="Issue" />
+                    <TableColumn fx:id="publisherColumn" prefWidth="140" text="Publisher" />
+                    <TableColumn fx:id="priceColumn" prefWidth="80" text="Price" />
+                    <TableColumn fx:id="stockColumn" prefWidth="70" text="Stock" />
                 </columns>
             </TableView>
 
-            <!-- FOOTER -->
             <HBox spacing="15">
-
                 <VBox spacing="6" style="-fx-background-color: white; -fx-background-radius: 12; -fx-padding: 10;">
-
                     <children>
-                        <Label text="Total Comics:" />
+                        <Label text="Titles in table:" />
                         <Label fx:id="totalComicsLabel" style="-fx-font-weight: bold;" text="0" />
                     </children>
                 </VBox>
-
                 <Region HBox.hgrow="ALWAYS" />
-
                 <HBox spacing="10">
-
-                    <Button fx:id="addButton" style="-fx-background-color: linear-gradient(to right, #000000, #681111); -fx-text-fill: white; -fx-background-radius: 10;" text="Add" />
-
-                    <Button fx:id="updateButton" style="-fx-background-color: #832216; -fx-text-fill: white; -fx-background-radius: 10;" text="Update" />
-
-                    <Button fx:id="deleteButton" style="-fx-background-color: #681111; -fx-text-fill: white; -fx-background-radius: 10;" text="Delete" />
-
+                    <Button fx:id="addButton" style="-fx-background-color: linear-gradient(to right, #000000, #681111); -fx-text-fill: white; -fx-background-radius: 10;" text="Add comic" />
+                    <Button fx:id="updateButton" style="-fx-background-color: #832216; -fx-text-fill: white; -fx-background-radius: 10;" text="Save changes" />
+                    <Button fx:id="deleteButton" style="-fx-background-color: #681111; -fx-text-fill: white; -fx-background-radius: 10;" text="Remove" />
                     <Button fx:id="refreshButton" style="-fx-background-color: #fff7ed; -fx-border-color: #832216; -fx-border-radius: 10;" text="Refresh" />
                 </HBox>
             </HBox>

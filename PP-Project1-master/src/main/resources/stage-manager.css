@@ -1,0 +1,16 @@
+.stage-dock-toggle {
+    -fx-background-radius: 10;
+    -fx-padding: 10 8;
+    -fx-background-color: #3a3a42;
+    -fx-text-fill: #e8e8ec;
+    -fx-font-size: 12px;
+}
+
+.stage-dock-toggle:hover {
+    -fx-background-color: #4a4a54;
+}
+
+.stage-dock-toggle:selected {
+    -fx-background-color: #6a6a78;
+    -fx-text-fill: white;
+}

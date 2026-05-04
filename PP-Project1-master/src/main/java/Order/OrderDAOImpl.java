@@ -2,33 +2,68 @@ package Order;
 
 import util.DBConnectionUtility;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 public class OrderDAOImpl implements OrderDAO {
 
-    private Order extractPaidFromResultSet(ResultSet rs) throws SQLException {
-        int paidID = rs.getInt("orderID");
-        String PaidDate = rs.getString("orderDate");
-        int comicID = rs.getInt("comicID");
-        int customerID = rs.getInt("customerID");
-        String status = rs.getString("Status");
-        return new Order(paidID, PaidDate, comicID, customerID, status);
+    private static final String ORDER_TABLE = "\"Order\"";
+
+    static {
+        ensureQuantityColumn();
     }
-    @Override
-    public Optional<Order> getPaidById(int orderID) {
-        String sql = "SELECT * FROM Order WHERE orderID = ?";
+
+    private static void ensureQuantityColumn() {
         try (Connection conn = DBConnectionUtility.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)){
-            ps.setInt(1, orderID);
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()){
-                return Optional.of(extractPaidFromResultSet(rs));
+             Statement st = conn.createStatement()) {
+            try {
+                st.execute("ALTER TABLE " + ORDER_TABLE + " ADD COLUMN quantity INTEGER NOT NULL DEFAULT 1");
+            } catch (SQLException ignored) {
+                // duplicate column, missing Order table, etc.
+            }
+        } catch (SQLException e) {
+            // no database file yet
+        }
+    }
+
+    private static boolean hasColumn(ResultSet rs, String label) throws SQLException {
+        ResultSetMetaData md = rs.getMetaData();
+        for (int i = 1; i <= md.getColumnCount(); i++) {
+            if (label.equalsIgnoreCase(md.getColumnLabel(i))) {
+                return true;
             }
         }
-        catch (SQLException e) {
+        return false;
+    }
+
+    private Order extractOrder(ResultSet rs) throws SQLException {
+        int id = rs.getInt("orderID");
+        String date = rs.getString("orderDate");
+        int comic = rs.getInt("comicID");
+        int cust = rs.getInt("customerID");
+        String status = rs.getString("Status");
+        int qty = hasColumn(rs, "quantity") ? rs.getInt("quantity") : 1;
+        return new Order(id, date, comic, cust, status, qty);
+    }
+
+    @Override
+    public Optional<Order> getPaidById(int orderID) {
+        String sql = "SELECT * FROM " + ORDER_TABLE + " WHERE orderID = ?";
+        try (Connection conn = DBConnectionUtility.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, orderID);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return Optional.of(extractOrder(rs));
+            }
+        } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
         return Optional.empty();
@@ -36,32 +71,31 @@ public class OrderDAOImpl implements OrderDAO {
 
     @Override
     public List<Order> getAllPaid() {
-        List<Order> order = new ArrayList<>();
-        String sql = "SELECT * FROM Order";
+        List<Order> orders = new ArrayList<>();
+        String sql = "SELECT * FROM " + ORDER_TABLE;
         try (Connection conn = DBConnectionUtility.getConnection();
              Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(sql)){
-            while (rs.next()){
-                order.add(extractPaidFromResultSet(rs));
+             ResultSet rs = stmt.executeQuery(sql)) {
+            while (rs.next()) {
+                orders.add(extractOrder(rs));
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-        return order;
+        return orders;
     }
 
     @Override
-    public Optional<Order> getPaidByPaidDate(String OrderDate) {
-        String sql = "SELECT * FROM Order WHERE orderDate = ?";
+    public Optional<Order> getPaidByPaidDate(String paidDate) {
+        String sql = "SELECT * FROM " + ORDER_TABLE + " WHERE orderDate = ?";
         try (Connection conn = DBConnectionUtility.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)){
-            ps.setString(1, OrderDate);
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, paidDate);
             ResultSet rs = ps.executeQuery();
-            if (rs.next()){
-                return Optional.of(extractPaidFromResultSet(rs));
+            if (rs.next()) {
+                return Optional.of(extractOrder(rs));
             }
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
         return Optional.empty();
@@ -69,49 +103,46 @@ public class OrderDAOImpl implements OrderDAO {
 
     @Override
     public void savePaid(Order order) {
-        String sql = "INSERT INTO Paid (PaidDate, comicID, customerID, Status) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO " + ORDER_TABLE + " (orderDate, comicID, customerID, Status, quantity) VALUES (?, ?, ?, ?, ?)";
         try (Connection conn = DBConnectionUtility.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)){
-            ps.setString(1, order.getPaidDate());
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, order.getOrderDate());
             ps.setInt(2, order.getComicId());
             ps.setInt(3, order.getCustomerID());
             ps.setString(4, order.getStatus());
-
+            ps.setInt(5, Math.max(1, order.getQuantity()));
             ps.executeUpdate();
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
     }
 
     @Override
     public void deletePaidByID(int orderID) {
-        String sql = "DELETE FROM Customers WHERE orderID = ?";
+        String sql = "DELETE FROM " + ORDER_TABLE + " WHERE orderID = ?";
         try (Connection conn = DBConnectionUtility.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)){
+             PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, orderID);
             ps.executeUpdate();
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
     }
 
     @Override
     public void updatePaid(Order order) {
-        String sql = "UPDATE Paid SET Status=? WHERE orderID = ?";
+        String sql = "UPDATE " + ORDER_TABLE + " SET orderDate = ?, comicID = ?, customerID = ?, Status = ?, quantity = ? WHERE orderID = ?";
         try (Connection conn = DBConnectionUtility.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)){
-            ps.setString(1, order.getStatus());
-            ps.setInt(2, order.getPaidID());
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, order.getOrderDate());
+            ps.setInt(2, order.getComicId());
+            ps.setInt(3, order.getCustomerID());
+            ps.setString(4, order.getStatus());
+            ps.setInt(5, Math.max(1, order.getQuantity()));
+            ps.setInt(6, order.getOrderID());
             ps.executeUpdate();
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
     }
 }
-
-
-
-

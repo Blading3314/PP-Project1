@@ -6,6 +6,7 @@ public class Employee {
     private String lastName;
     private String phoneNumber;
     private String email;
+
     public Employee(int employeeID, String firstName, String lastName, String phoneNumber, String email) {
         this.employeeID = employeeID;
         this.firstName = firstName;
@@ -17,6 +18,7 @@ public class Employee {
     public int getEmployeeID() {
         return employeeID;
     }
+
     public void setEmployeeID(int employeeID) {
         this.employeeID = employeeID;
     }
@@ -24,6 +26,7 @@ public class Employee {
     public String getFirstName() {
         return firstName;
     }
+
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
@@ -31,17 +34,19 @@ public class Employee {
     public String getLastName() {
         return lastName;
     }
+
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
-    public String getFullName(){
-        return firstName + " " + lastName;
-    }
 
+    public String getFullName() {
+        return (firstName == null ? "" : firstName) + " " + (lastName == null ? "" : lastName);
+    }
 
     public String getPhoneNumber() {
         return phoneNumber;
     }
+
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
@@ -49,15 +54,17 @@ public class Employee {
     public String getEmail() {
         return email;
     }
+
     public void setEmail(String email) {
         this.email = email;
     }
+
     @Override
-    public String toString(){
-        return "Employee.Employee ID: " + employeeID +
-                "\n" + "First Name: " + firstName +
-                "\n" + "Last Name: " + lastName +
-                "\n" + "Phone Number: " + phoneNumber +
-                "\n" + "Email: " + email;
+    public String toString() {
+        return "Employee ID: " + employeeID
+                + "\nFirst Name: " + firstName
+                + "\nLast Name: " + lastName
+                + "\nPhone: " + phoneNumber
+                + "\nEmail: " + email;
     }
 }

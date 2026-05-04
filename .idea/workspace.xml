@@ -4,51 +4,34 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="aa8d4e0e-55e7-4e04-a8c7-770a0144b1e1" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/PP-Project1-master/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/PP-Project1-master/.idea/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/PP-Project1-master/.idea/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PP-Project1-master/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PP-Project1-master/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PP-Project1-master/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PP-Project1-master/.idea/dataSources.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PP-Project1-master/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PP-Project1-master/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PP-Project1-master/.idea/jarRepositories.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PP-Project1-master/.idea/jarRepositories.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PP-Project1-master/.idea/libraries/junit_jupiter.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PP-Project1-master/.idea/libraries/junit_jupiter.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PP-Project1-master/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PP-Project1-master/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PP-Project1-master/.idea/pp-project1.iml" beforeDir="false" afterPath="$PROJECT_DIR$/PP-Project1-master/.idea/pp-project1.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PP-Project1-master/.idea/uiDesigner.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PP-Project1-master/.idea/uiDesigner.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PP-Project1-master/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PP-Project1-master/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PP-Project1-master/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/PP-Project1-master/exportToHTML/.gitignore.html" beforeDir="false" afterPath="$PROJECT_DIR$/PP-Project1-master/exportToHTML/.gitignore.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PP-Project1-master/exportToHTML/PP-Project1.iml.html" beforeDir="false" afterPath="$PROJECT_DIR$/PP-Project1-master/exportToHTML/PP-Project1.iml.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PP-Project1-master/exportToHTML/README.md.html" beforeDir="false" afterPath="$PROJECT_DIR$/PP-Project1-master/exportToHTML/README.md.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PP-Project1-master/identifier.sqlite" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/PP-Project1-master/pom.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/java/Comic/Comic.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/java/Comic/ComicDAO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/java/Comic/ComicDAOImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/java/Customer/Customer.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/java/Customer/CustomerDAO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/java/Customer/CustomerDAOImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/java/Employee/Employee.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/java/Employee/EmployeeDAO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/java/Employee/EmployeeDAOImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/java/Order/Order.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/java/Order/OrderDAO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/java/Order/OrderDAOImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/java/main/ComicController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/java/main/CustomerController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/java/main/EmployeeController.java" beforeDir="false" />
+    <list default="true" id="aa8d4e0e-55e7-4e04-a8c7-770a0144b1e1" name="Changes" comment="update some stuff">
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/data_source_mapping.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/PP-Project1.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/PP-Project1.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/java/Comic/Comic.java" beforeDir="false" afterPath="$PROJECT_DIR$/PP-Project1-master/src/main/java/Comic/Comic.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/java/Comic/ComicDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/PP-Project1-master/src/main/java/Comic/ComicDAOImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/java/Customer/CustomerDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/PP-Project1-master/src/main/java/Customer/CustomerDAOImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/java/Employee/Employee.java" beforeDir="false" afterPath="$PROJECT_DIR$/PP-Project1-master/src/main/java/Employee/Employee.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/java/Employee/EmployeeDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/PP-Project1-master/src/main/java/Employee/EmployeeDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/java/Employee/EmployeeDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/PP-Project1-master/src/main/java/Employee/EmployeeDAOImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/java/Order/Order.java" beforeDir="false" afterPath="$PROJECT_DIR$/PP-Project1-master/src/main/java/Order/Order.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/java/Order/OrderDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/PP-Project1-master/src/main/java/Order/OrderDAOImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/java/main/ComicController.java" beforeDir="false" afterPath="$PROJECT_DIR$/PP-Project1-master/src/main/java/main/ComicController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/java/main/CustomerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/PP-Project1-master/src/main/java/main/CustomerController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/java/main/EmployeeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/PP-Project1-master/src/main/java/main/EmployeeController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/java/main/LoginController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/java/main/MainController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/java/main/OrderController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/java/main/TestFX.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/java/util/DBConnectionUtility.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/resources/comic-view.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/resources/customer-view.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/resources/employee-view.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/java/main/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/PP-Project1-master/src/main/java/main/MainController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/java/main/OrderController.java" beforeDir="false" afterPath="$PROJECT_DIR$/PP-Project1-master/src/main/java/main/OrderController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/java/main/TestFX.java" beforeDir="false" afterPath="$PROJECT_DIR$/PP-Project1-master/src/main/java/main/TestFX.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/resources/comic-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/PP-Project1-master/src/main/resources/comic-view.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/resources/employee-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/PP-Project1-master/src/main/resources/employee-view.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/resources/login-view.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/resources/main-view.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/resources/order-view.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/PP-Project1-master/test.db" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/resources/main-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/PP-Project1-master/src/main/resources/main-view.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/resources/order-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/PP-Project1-master/src/main/resources/order-view.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PP-Project1-master/test.db" beforeDir="false" afterPath="$PROJECT_DIR$/PP-Project1-master/test.db" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -88,11 +71,14 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Application.SampleDataSeeder.executor": "Run",
+    "Maven.Unnamed.executor": "Run",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.MCP Project settings loaded": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
     "git-widget-placeholder": "master",
     "junie.onboarding.icon.badge.shown": "true",
@@ -107,6 +93,13 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="RecapSpentCounter">
+    <option name="endsOfQuotaMs" value="1778598047027" />
+    <option name="spentUsd" value="0.00419475" />
+  </component>
+  <component name="RecapUselessUpdatesCounter">
+    <option name="suspendCountdown" value="9" />
+  </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\thoma\Downloads\PP-Project1" />
@@ -159,11 +152,32 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1777931441027</updated>
-      <workItem from="1777931443138" duration="422000" />
+      <workItem from="1777931443138" duration="6243000" />
     </task>
+    <task id="LOCAL-00001" summary="update some stuff">
+      <option name="closed" value="true" />
+      <created>1777931965956</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1777931965956</updated>
+    </task>
+    <task id="LOCAL-00002" summary="update some stuff">
+      <option name="closed" value="true" />
+      <created>1777931982883</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1777931982883</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="update some stuff" />
+    <option name="LAST_COMMIT_MESSAGE" value="update some stuff" />
   </component>
 </project>

@@ -1,9 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.MainController">
-    <TabPane layoutY="-2.0" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" />
-    <AnchorPane layoutX="-240.0" layoutY="173.0" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
-</AnchorPane>
+<BorderPane prefHeight="720.0" prefWidth="1100.0" style="-fx-background-color: #1a1a1e;" stylesheets="@stage-manager.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.MainController">
+
+    <fx:define>
+        <ToggleGroup fx:id="moduleGroup" />
+    </fx:define>
+
+    <left>
+        <VBox alignment="TOP_CENTER" prefWidth="132.0" spacing="10.0" style="-fx-background-color: linear-gradient(to bottom, #2c2c32, #1f1f24); -fx-border-color: #3a3a42; -fx-border-width: 0 1 0 0;">
+            <padding>
+                <Insets bottom="16.0" left="12.0" right="12.0" top="20.0" />
+            </padding>
+            <children>
+                <Label text="Spaces" textFill="#a8a8b0">
+                    <font>
+                        <Font name="System Bold" size="11.0" />
+                    </font>
+                </Label>
+                <Separator maxWidth="96.0" style="-fx-background-color: #4a4a52;" />
+                <ToggleButton fx:id="customersToggle" maxWidth="Infinity" mnemonicParsing="false" styleClass="stage-dock-toggle" text="Customers" toggleGroup="$moduleGroup" wrapText="true" />
+                <ToggleButton fx:id="employeesToggle" maxWidth="Infinity" mnemonicParsing="false" styleClass="stage-dock-toggle" text="Employees" toggleGroup="$moduleGroup" wrapText="true" />
+                <ToggleButton fx:id="comicsToggle" maxWidth="Infinity" mnemonicParsing="false" styleClass="stage-dock-toggle" text="Comics" toggleGroup="$moduleGroup" wrapText="true" />
+                <ToggleButton fx:id="ordersToggle" maxWidth="Infinity" mnemonicParsing="false" styleClass="stage-dock-toggle" text="Orders" toggleGroup="$moduleGroup" wrapText="true" />
+                <Region VBox.vgrow="ALWAYS" />
+            </children>
+        </VBox>
+    </left>
+
+    <center>
+        <BorderPane style="-fx-background-color: #121214;">
+            <padding>
+                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+            </padding>
+            <center>
+                <StackPane fx:id="contentStack" />
+            </center>
+        </BorderPane>
+    </center>
+</BorderPane>
