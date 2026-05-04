@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="aa8d4e0e-55e7-4e04-a8c7-770a0144b1e1" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/PP-Project1-master/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PP-Project1-master/.idea/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/PP-Project1-master/.idea/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PP-Project1-master/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PP-Project1-master/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PP-Project1-master/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PP-Project1-master/.idea/dataSources.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PP-Project1-master/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PP-Project1-master/.idea/encodings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PP-Project1-master/.idea/jarRepositories.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PP-Project1-master/.idea/jarRepositories.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PP-Project1-master/.idea/libraries/junit_jupiter.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PP-Project1-master/.idea/libraries/junit_jupiter.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PP-Project1-master/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PP-Project1-master/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PP-Project1-master/.idea/pp-project1.iml" beforeDir="false" afterPath="$PROJECT_DIR$/PP-Project1-master/.idea/pp-project1.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PP-Project1-master/.idea/uiDesigner.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PP-Project1-master/.idea/uiDesigner.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PP-Project1-master/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PP-Project1-master/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PP-Project1-master/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PP-Project1-master/exportToHTML/.gitignore.html" beforeDir="false" afterPath="$PROJECT_DIR$/PP-Project1-master/exportToHTML/.gitignore.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PP-Project1-master/exportToHTML/PP-Project1.iml.html" beforeDir="false" afterPath="$PROJECT_DIR$/PP-Project1-master/exportToHTML/PP-Project1.iml.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PP-Project1-master/exportToHTML/README.md.html" beforeDir="false" afterPath="$PROJECT_DIR$/PP-Project1-master/exportToHTML/README.md.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PP-Project1-master/identifier.sqlite" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PP-Project1-master/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/java/Comic/Comic.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/java/Comic/ComicDAO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/java/Comic/ComicDAOImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/java/Customer/Customer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/java/Customer/CustomerDAO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/java/Customer/CustomerDAOImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/java/Employee/Employee.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/java/Employee/EmployeeDAO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/java/Employee/EmployeeDAOImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/java/Order/Order.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/java/Order/OrderDAO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/java/Order/OrderDAOImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/java/main/ComicController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/java/main/CustomerController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/java/main/EmployeeController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/java/main/LoginController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/java/main/MainController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/java/main/OrderController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/java/main/TestFX.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/java/util/DBConnectionUtility.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/resources/comic-view.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/resources/customer-view.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/resources/employee-view.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/resources/login-view.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/resources/main-view.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/resources/order-view.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PP-Project1-master/test.db" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="EmbeddingIndexingInfo">
+    <option name="cachedIndexableFilesCount" value="49" />
+    <option name="fileBasedEmbeddingIndicesEnabled" value="true" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "Blading3314"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/Blading3314/PP-Project1",
+    "accountId": "7e9a3351-f69c-4802-8c29-ac33e37d78e9"
+  }
+}]]></component>
+  <component name="McpProjectServerCommands">
+    <commands />
+    <urls />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 2
+}]]></component>
+  <component name="ProjectId" id="3DHGAfDuCY81suZKLuZsrQr5Rgp" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.MCP Project settings loaded": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
+    "git-widget-placeholder": "master",
+    "junie.onboarding.icon.badge.shown": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/thoma/Downloads/PP-Project1",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "to.speed.mode.migration.done": "true",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\thoma\Downloads\PP-Project1" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="Unnamed" type="MavenRunConfiguration" factoryName="Maven">
+      <MavenSettings>
+        <option name="myGeneralSettings" />
+        <option name="myRunnerSettings" />
+        <option name="myRunnerParameters">
+          <MavenRunnerParameters>
+            <option name="cmdOptions" />
+            <option name="profiles">
+              <set />
+            </option>
+            <option name="goals">
+              <list>
+                <option value="javafx:run" />
+              </list>
+            </option>
+            <option name="multimoduleDir" />
+            <option name="pomFileName" />
+            <option name="profilesMap">
+              <map />
+            </option>
+            <option name="projectsCmdOptionValues">
+              <list />
+            </option>
+            <option name="resolveToWorkspace" value="false" />
+            <option name="workingDirPath" value="$PROJECT_DIR$/PP-Project1-master" />
+          </MavenRunnerParameters>
+        </option>
+      </MavenSettings>
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-30f59d01ecdd-2fc7cc6b9a17-intellij.indexing.shared.core-IU-253.30387.90" />
+        <option value="bundled-js-predefined-d6986cc7102b-9b0f141eb926-JavaScript-IU-253.30387.90" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="aa8d4e0e-55e7-4e04-a8c7-770a0144b1e1" name="Changes" comment="" />
+      <created>1777931441027</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1777931441027</updated>
+      <workItem from="1777931443138" duration="422000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
