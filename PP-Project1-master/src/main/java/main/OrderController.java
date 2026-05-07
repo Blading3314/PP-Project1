@@ -1,5 +1,6 @@
 package main;
 
+import I18n.I18nManager;
 import Comic.ComicDAO;
 import Comic.ComicDAOImpl;
 import Customer.CustomerDAO;
@@ -24,15 +25,16 @@ import javafx.scene.control.TextField;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.function.Predicate;
 
 public class OrderController {
 
-    private static final List<String> STATUS_OPTIONS = List.of(
-            "Pending", "Shipped", "Cancelled", "Returned");
-    private static final DateTimeFormatter ISO = DateTimeFormatter.ISO_LOCAL_DATE;
+    private I18nManager i18n = I18nManager.getInstance();
+    private DateTimeFormatter ISO = DateTimeFormatter.ISO_LOCAL_DATE;
 
     @FXML
     private TextField orderIdField;
@@ -85,7 +87,14 @@ public class OrderController {
 
     @FXML
     private void initialize() {
-        statusCombo.setItems(FXCollections.observableArrayList(STATUS_OPTIONS));
+        // Use database-compatible status values with internationalized display
+        Map<String, String> statusMap = Map.of(
+            "CONFIRM", i18n.getString("status.pending"),
+            "CANCELED", i18n.getString("status.cancelled")
+        );
+        
+        List<String> statusOptions = new ArrayList<>(statusMap.values());
+        statusCombo.setItems(FXCollections.observableArrayList(statusOptions));
         statusCombo.getSelectionModel().selectFirst();
 
         orderIdColumn.setCellValueFactory(cd -> new ReadOnlyObjectWrapper<>(cd.getValue().getOrderID()));
@@ -93,9 +102,21 @@ public class OrderController {
         customerIdColumn.setCellValueFactory(cd -> new ReadOnlyObjectWrapper<>(cd.getValue().getCustomerID()));
         comicIdColumn.setCellValueFactory(cd -> new ReadOnlyObjectWrapper<>(cd.getValue().getComicId()));
         quantityColumn.setCellValueFactory(cd -> new ReadOnlyObjectWrapper<>(cd.getValue().getQuantity()));
-        statusColumn.setCellValueFactory(cd -> new ReadOnlyStringWrapper(cd.getValue().getStatus()));
+        statusColumn.setCellValueFactory(cd -> {
+            String status = cd.getValue().getStatus();
+            String displayText = switch (status) {
+                case "CONFIRM" -> i18n.getString("status.pending");
+                case "CANCELED" -> i18n.getString("status.cancelled");
+                default -> status;
+            };
+            return new ReadOnlyStringWrapper(displayText);
+        });
 
-        reloadFromDatabase();
+        // Initialize empty table - no data loading until search
+        allOrders = FXCollections.observableArrayList();
+        filteredOrders = new FilteredList<>(allOrders, p -> false); // Start with no results
+        orderTable.setItems(filteredOrders);
+        totalOrdersLabel.setText("0");
 
         orderTable.getSelectionModel().selectedItemProperty().addListener((obs, oldV, row) -> {
             if (row != null) {
@@ -105,13 +126,13 @@ public class OrderController {
                 comicIdField.setText(Integer.toString(row.getComicId()));
                 quantityField.setText(Integer.toString(row.getQuantity()));
                 String st = row.getStatus();
-                if (st != null && STATUS_OPTIONS.contains(st)) {
-                    statusCombo.getSelectionModel().select(st);
-                } else if (st != null) {
-                    if (!statusCombo.getItems().contains(st)) {
-                        statusCombo.getItems().add(st);
-                    }
-                    statusCombo.getSelectionModel().select(st);
+                if (st != null) {
+                    String displayStatus = switch (st) {
+                        case "CONFIRM" -> i18n.getString("status.pending");
+                        case "CANCELED" -> i18n.getString("status.cancelled");
+                        default -> st;
+                    };
+                    statusCombo.getSelectionModel().select(displayStatus);
                 }
             } else {
                 prepareBlankOrderForm();
@@ -152,18 +173,23 @@ public class OrderController {
     }
 
     private void applySearchFilter() {
-        if (filteredOrders == null) {
-            return;
-        }
         String q = searchField.getText() == null ? "" : searchField.getText().trim().toLowerCase(Locale.ROOT);
         if (q.isEmpty()) {
-            filteredOrders.setPredicate(o -> true);
-            totalOrdersLabel.setText(Integer.toString(allOrders.size()));
+            // Clear table when search is empty
+            allOrders.clear();
+            filteredOrders.setPredicate(order -> false);
+            totalOrdersLabel.setText("0");
             return;
         }
+        
+        // Load data from database only when searching
+        List<Order> orders = orderDao.getAllPaid();
+        allOrders = FXCollections.observableArrayList(orders);
+        filteredOrders = new FilteredList<>(allOrders, p -> false);
+        orderTable.setItems(filteredOrders);
+        
         Predicate<Order> match = o -> {
-            String blob = (o.getOrderID() + " " + o.getOrderDate() + " " + o.getCustomerID() + " "
-                    + o.getComicId() + " " + o.getQuantity() + " " + o.getStatus()).toLowerCase(Locale.ROOT);
+            String blob = (o.getOrderID() + " " + o.getOrderDate() + " " + o.getCustomerID() + " " + o.getComicId() + " " + o.getQuantity() + " " + o.getStatus()).toLowerCase(Locale.ROOT);
             return blob.contains(q);
         };
         filteredOrders.setPredicate(match);
@@ -257,11 +283,18 @@ public class OrderController {
             return null;
         }
 
-        String status = statusCombo.getSelectionModel().getSelectedItem();
-        if (status == null || status.isBlank()) {
+        String displayStatus = statusCombo.getSelectionModel().getSelectedItem();
+        if (displayStatus == null || displayStatus.isBlank()) {
             showInfo("Status", "Pick a status from the list.");
             return null;
         }
+        
+        // Convert display text back to database value
+        String status = switch (displayStatus) {
+            case String s when s.equals(i18n.getString("status.pending")) -> "CONFIRM";
+            case String s when s.equals(i18n.getString("status.cancelled")) -> "CANCELED";
+            default -> displayStatus;
+        };
 
         return new ParsedOrderForm(date.format(ISO), custId, comicId, status, qty);
     }

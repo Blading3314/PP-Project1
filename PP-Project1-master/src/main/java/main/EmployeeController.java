@@ -70,7 +70,10 @@ public class EmployeeController {
         phoneColumn.setCellValueFactory(cd -> new ReadOnlyStringWrapper(cd.getValue().getPhoneNumber()));
         emailColumn.setCellValueFactory(cd -> new ReadOnlyStringWrapper(cd.getValue().getEmail()));
 
-        reloadFromDatabase();
+        // Initialize empty table - no data loading until search
+        allEmployees = FXCollections.observableArrayList();
+        filteredEmployees = new FilteredList<>(allEmployees, p -> false); // Start with no results
+        employeeTable.setItems(filteredEmployees);
 
         employeeTable.getSelectionModel().selectedItemProperty().addListener((obs, oldV, row) -> {
             if (row != null) {
@@ -104,14 +107,20 @@ public class EmployeeController {
     }
 
     private void applySearchFilter() {
-        if (filteredEmployees == null) {
-            return;
-        }
         String q = searchField.getText() == null ? "" : searchField.getText().trim().toLowerCase(Locale.ROOT);
         if (q.isEmpty()) {
-            filteredEmployees.setPredicate(r -> true);
+            // Clear table when search is empty
+            allEmployees.clear();
+            filteredEmployees.setPredicate(employee -> false);
             return;
         }
+        
+        // Load data from database only when searching
+        List<Employee> employees = dao.getAllEmployees();
+        allEmployees = FXCollections.observableArrayList(employees);
+        filteredEmployees = new FilteredList<>(allEmployees, p -> false);
+        employeeTable.setItems(filteredEmployees);
+        
         Predicate<Employee> match = r -> {
             String blob = (r.getFirstName() + " " + r.getLastName() + " " + r.getPhoneNumber() + " "
                     + r.getEmail() + " " + r.getEmployeeID()).toLowerCase(Locale.ROOT);

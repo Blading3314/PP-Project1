@@ -11,11 +11,11 @@
 
             <HBox alignment="CENTER_LEFT" spacing="20" style="-fx-background-color: linear-gradient(to right, #000000, #681111); -fx-background-radius: 14; -fx-padding: 15;">
                 <children>
-                    <Label style="-fx-font-weight: bold;" text="Orders" textFill="WHITE">
+                    <Label text="%order.title" textFill="WHITE">
                         <font><Font size="20" /></font>
                     </Label>
                     <Region HBox.hgrow="ALWAYS" />
-                    <Label text="Link customers to comics; track status and quantity" textFill="WHITE" />
+                    <Label text="%order.description" textFill="WHITE" />
                 </children>
             </HBox>
 
@@ -29,22 +29,22 @@
                     <ColumnConstraints percentWidth="12" />
                 </columnConstraints>
                 <children>
-                    <Label text="Order ID" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                    <Label text="%order.id" GridPane.columnIndex="0" GridPane.rowIndex="0" />
                     <TextField fx:id="orderIdField" editable="false" promptText="new" GridPane.columnIndex="0" GridPane.rowIndex="1" />
 
-                    <Label text="Order date" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                    <Label text="%order.date" GridPane.columnIndex="1" GridPane.rowIndex="0" />
                     <TextField fx:id="orderDateField" promptText="YYYY-MM-DD" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
-                    <Label text="Status" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+                    <Label text="%order.status" GridPane.columnIndex="2" GridPane.rowIndex="0" />
                     <ComboBox fx:id="statusCombo" editable="false" maxWidth="Infinity" GridPane.columnIndex="2" GridPane.rowIndex="1" />
 
-                    <Label text="Customer ID" GridPane.columnIndex="3" GridPane.rowIndex="0" />
+                    <Label text="%order.customer.id" GridPane.columnIndex="3" GridPane.rowIndex="0" />
                     <TextField fx:id="customerIdField" promptText="e.g. 3" GridPane.columnIndex="3" GridPane.rowIndex="1" />
 
-                    <Label text="Comic ID" GridPane.columnIndex="4" GridPane.rowIndex="0" />
+                    <Label text="%order.comic.id" GridPane.columnIndex="4" GridPane.rowIndex="0" />
                     <TextField fx:id="comicIdField" promptText="e.g. 5" GridPane.columnIndex="4" GridPane.rowIndex="1" />
 
-                    <Label text="Quantity" GridPane.columnIndex="5" GridPane.rowIndex="0" />
+                    <Label text="%order.quantity" GridPane.columnIndex="5" GridPane.rowIndex="0" />
                     <TextField fx:id="quantityField" promptText="1" GridPane.columnIndex="5" GridPane.rowIndex="1" />
                 </children>
                 <rowConstraints>
@@ -55,36 +55,36 @@
 
             <HBox spacing="10" style="-fx-background-color: white; -fx-background-radius: 14; -fx-padding: 12;">
                 <children>
-                    <TextField fx:id="searchField" promptText="Search by ID, date, customer, comic, status…" style="-fx-background-color: #fff7ed; -fx-background-radius: 10; -fx-border-color: #832216; -fx-border-radius: 10;" HBox.hgrow="ALWAYS" />
-                    <Button fx:id="searchButton" style="-fx-background-color: linear-gradient(to right, #000000, #681111); -fx-text-fill: white; -fx-background-radius: 10;" text="Search" />
-                    <Button fx:id="clearButton" style="-fx-background-color: #fff7ed; -fx-border-color: #832216; -fx-border-radius: 10;" text="Clear" />
+                    <TextField fx:id="searchField" promptText="%order.search.prompt" style="-fx-background-color: #fff7ed; -fx-background-radius: 10; -fx-border-color: #832216; -fx-border-radius: 10;" HBox.hgrow="ALWAYS" />
+                    <Button fx:id="searchButton" style="-fx-background-color: linear-gradient(to right, #000000, #681111); -fx-text-fill: white; -fx-background-radius: 10;" text="%order.search.button" />
+                    <Button fx:id="clearButton" style="-fx-background-color: #fff7ed; -fx-border-color: #832216; -fx-border-radius: 10;" text="%order.clear.button" />
                 </children>
             </HBox>
 
             <TableView fx:id="orderTable" style="-fx-background-radius: 12; -fx-border-color: #832216; -fx-border-radius: 12;" VBox.vgrow="ALWAYS">
                 <columns>
-                    <TableColumn fx:id="orderIdColumn" prefWidth="80" text="Order ID" />
-                    <TableColumn fx:id="orderDateColumn" prefWidth="110" text="Date" />
-                    <TableColumn fx:id="customerIdColumn" prefWidth="100" text="Customer" />
-                    <TableColumn fx:id="comicIdColumn" prefWidth="90" text="Comic" />
-                    <TableColumn fx:id="quantityColumn" prefWidth="70" text="Qty" />
-                    <TableColumn fx:id="statusColumn" prefWidth="140" text="Status" />
+                    <TableColumn fx:id="orderIdColumn" prefWidth="80" text="%order.table.id" />
+                    <TableColumn fx:id="orderDateColumn" prefWidth="110" text="%order.table.date" />
+                    <TableColumn fx:id="customerIdColumn" prefWidth="100" text="%order.table.customer" />
+                    <TableColumn fx:id="comicIdColumn" prefWidth="90" text="%order.table.comic" />
+                    <TableColumn fx:id="quantityColumn" prefWidth="70" text="%order.table.qty" />
+                    <TableColumn fx:id="statusColumn" prefWidth="140" text="%order.table.status" />
                 </columns>
             </TableView>
 
             <HBox spacing="15">
                 <VBox spacing="6" style="-fx-background-color: white; -fx-background-radius: 12; -fx-padding: 10;">
                     <children>
-                        <Label text="Orders in table:" />
+                        <Label text="%order.orders.in.table" />
                         <Label fx:id="totalOrdersLabel" style="-fx-font-weight: bold;" text="0" />
                     </children>
                 </VBox>
                 <Region HBox.hgrow="ALWAYS" />
                 <HBox spacing="10">
-                    <Button fx:id="addButton" style="-fx-background-color: linear-gradient(to right, #000000, #681111); -fx-text-fill: white; -fx-background-radius: 10;" text="New order" />
-                    <Button fx:id="updateButton" style="-fx-background-color: #832216; -fx-text-fill: white; -fx-background-radius: 10;" text="Save changes" />
-                    <Button fx:id="deleteButton" style="-fx-background-color: #681111; -fx-text-fill: white; -fx-background-radius: 10;" text="Remove" />
-                    <Button fx:id="refreshButton" style="-fx-background-color: #fff7ed; -fx-border-color: #832216; -fx-border-radius: 10;" text="Refresh" />
+                    <Button fx:id="addButton" style="-fx-background-color: linear-gradient(to right, #000000, #681111); -fx-text-fill: white; -fx-background-radius: 10;" text="%order.new.order" />
+                    <Button fx:id="updateButton" style="-fx-background-color: #832216; -fx-text-fill: white; -fx-background-radius: 10;" text="%order.save.changes" />
+                    <Button fx:id="deleteButton" style="-fx-background-color: #681111; -fx-text-fill: white; -fx-background-radius: 10;" text="%order.remove" />
+                    <Button fx:id="refreshButton" style="-fx-background-color: #fff7ed; -fx-border-color: #832216; -fx-border-radius: 10;" text="%order.refresh" />
                 </HBox>
             </HBox>
 

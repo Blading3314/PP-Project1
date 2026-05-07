@@ -1,13 +1,16 @@
 package main;
 
+import I18n.I18nManager;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.control.*;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -16,7 +19,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.EnumMap;
 import java.util.Map;
+import java.util.Locale;
 import java.util.Properties;
+import java.util.ResourceBundle;
 
 public class MainController {
 
@@ -41,8 +46,12 @@ public class MainController {
     @FXML
     private ToggleButton ordersToggle;
 
+    @FXML
+    private ComboBox<String> languageSelector;
+
     private final Map<Module, Node> moduleRoots = new EnumMap<>(Module.class);
     private final Path prefsPath = Path.of(System.getProperty("user.home"), PREFS_FILE);
+    private I18nManager i18n = I18nManager.getInstance();
 
     private enum Module {
         CUSTOMERS("customers", "/customer-view.fxml"),
@@ -61,6 +70,8 @@ public class MainController {
 
     @FXML
     private void initialize() {
+        initializeLanguageSelector();
+        
         bindToggle(Module.CUSTOMERS, customersToggle);
         bindToggle(Module.EMPLOYEES, employeesToggle);
         bindToggle(Module.COMICS, comicsToggle);
@@ -93,6 +104,52 @@ public class MainController {
         });
     }
 
+    private void initializeLanguageSelector() {
+        languageSelector.getItems().addAll("English", "Français", "Español");
+        
+        // Set current locale
+        Locale current = i18n.getCurrentLocale();
+        if (current.equals(Locale.ENGLISH)) {
+            languageSelector.getSelectionModel().select("English");
+        } else if (current.equals(Locale.FRENCH)) {
+            languageSelector.getSelectionModel().select("Français");
+        } else if (current.getLanguage().equals("es")) {
+            languageSelector.getSelectionModel().select("Español");
+        }
+        
+        languageSelector.setOnAction(event -> {
+            String selected = languageSelector.getSelectionModel().getSelectedItem();
+            switch (selected) {
+                case "English" -> i18n.setEnglish();
+                case "Français" -> i18n.setFrench();
+                case "Español" -> i18n.setSpanish();
+            }
+            refreshAllModules();
+        });
+    }
+
+    private void refreshAllModules() {
+        moduleRoots.clear();
+        contentStack.getChildren().clear();
+        
+        // Update toggle button text
+        updateToggleButtonText();
+        
+        // Reload current module
+        Toggle selectedToggle = moduleGroup.getSelectedToggle();
+        if (selectedToggle != null) {
+            Module mod = (Module) selectedToggle.getUserData();
+            showModule(mod);
+        }
+    }
+
+    private void updateToggleButtonText() {
+        customersToggle.setText(i18n.getString("main.customers"));
+        employeesToggle.setText(i18n.getString("main.employees"));
+        comicsToggle.setText(i18n.getString("main.comics"));
+        ordersToggle.setText(i18n.getString("main.orders"));
+    }
+
     private void bindToggle(Module mod, ToggleButton btn) {
         btn.setUserData(mod);
         btn.setMaxWidth(Double.MAX_VALUE);
@@ -112,7 +169,9 @@ public class MainController {
 
     private Node loadModuleFxml(Module mod) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(mod.resource));
+            I18nManager i18n = I18nManager.getInstance();
+            ResourceBundle bundle = i18n.getResourceBundle();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(mod.resource), bundle);
             return loader.load();
         } catch (IOException e) {
             throw new RuntimeException("Failed to load " + mod.resource, e);

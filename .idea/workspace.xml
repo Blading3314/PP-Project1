@@ -5,30 +5,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="aa8d4e0e-55e7-4e04-a8c7-770a0144b1e1" name="Changes" comment="update some stuff">
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/data_source_mapping.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/PP-Project1.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/PP-Project1.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/2820d557-72fc-4ab2-a1df-bda01a25b266.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/2820d557-72fc-4ab2-a1df-bda01a25b266.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/data_source_mapping.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/data_source_mapping.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/java/Comic/Comic.java" beforeDir="false" afterPath="$PROJECT_DIR$/PP-Project1-master/src/main/java/Comic/Comic.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/java/Comic/ComicDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/PP-Project1-master/src/main/java/Comic/ComicDAOImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/java/Customer/CustomerDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/PP-Project1-master/src/main/java/Customer/CustomerDAOImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/java/Employee/Employee.java" beforeDir="false" afterPath="$PROJECT_DIR$/PP-Project1-master/src/main/java/Employee/Employee.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/java/Employee/EmployeeDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/PP-Project1-master/src/main/java/Employee/EmployeeDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/java/Employee/EmployeeDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/PP-Project1-master/src/main/java/Employee/EmployeeDAOImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/java/Order/Order.java" beforeDir="false" afterPath="$PROJECT_DIR$/PP-Project1-master/src/main/java/Order/Order.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/java/Order/OrderDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/PP-Project1-master/src/main/java/Order/OrderDAOImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/java/main/ComicController.java" beforeDir="false" afterPath="$PROJECT_DIR$/PP-Project1-master/src/main/java/main/ComicController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/java/main/CustomerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/PP-Project1-master/src/main/java/main/CustomerController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/java/main/EmployeeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/PP-Project1-master/src/main/java/main/EmployeeController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/java/main/LoginController.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/java/main/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/PP-Project1-master/src/main/java/main/MainController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/java/main/OrderController.java" beforeDir="false" afterPath="$PROJECT_DIR$/PP-Project1-master/src/main/java/main/OrderController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/java/main/TestFX.java" beforeDir="false" afterPath="$PROJECT_DIR$/PP-Project1-master/src/main/java/main/TestFX.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/resources/comic-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/PP-Project1-master/src/main/resources/comic-view.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/resources/customer-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/PP-Project1-master/src/main/resources/customer-view.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/resources/employee-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/PP-Project1-master/src/main/resources/employee-view.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/resources/login-view.fxml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/resources/main-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/PP-Project1-master/src/main/resources/main-view.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/resources/order-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/PP-Project1-master/src/main/resources/order-view.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PP-Project1-master/test.db" beforeDir="false" afterPath="$PROJECT_DIR$/PP-Project1-master/test.db" afterDir="false" />
@@ -38,61 +30,76 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="ComposerSettings">
+    <execution />
+  </component>
   <component name="EmbeddingIndexingInfo">
-    <option name="cachedIndexableFilesCount" value="49" />
+    <option name="cachedIndexableFilesCount" value="46" />
     <option name="fileBasedEmbeddingIndicesEnabled" value="true" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "Blading3314"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Blading3314&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/Blading3314/PP-Project1",
-    "accountId": "7e9a3351-f69c-4802-8c29-ac33e37d78e9"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/Blading3314/PP-Project1&quot;,
+    &quot;accountId&quot;: &quot;a801ba89-d9fd-4b50-93df-6ea09a1e7988&quot;
   }
-}]]></component>
+}</component>
   <component name="McpProjectServerCommands">
     <commands />
     <urls />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 2
-}]]></component>
+  <component name="PhpWorkspaceProjectConfiguration" interpreter_name="/opt/homebrew/Cellar/php/8.5.5/bin/php" />
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 2
+}</component>
   <component name="ProjectId" id="3DHGAfDuCY81suZKLuZsrQr5Rgp" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.SampleDataSeeder.executor": "Run",
-    "Maven.Unnamed.executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.MCP Project settings loaded": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
-    "git-widget-placeholder": "master",
-    "junie.onboarding.icon.badge.shown": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/thoma/Downloads/PP-Project1",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "to.speed.mode.migration.done": "true",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.I18nTest.executor&quot;: &quot;Run&quot;,
+    &quot;Application.SampleDataSeeder.executor&quot;: &quot;Run&quot;,
+    &quot;Application.SystemLocale.executor&quot;: &quot;Run&quot;,
+    &quot;Maven.Unnamed.executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.MCP Project settings loaded&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
+    &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/thoma/Downloads/PP-Project1&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecapSpentCounter">
     <option name="endsOfQuotaMs" value="1778598047027" />
     <option name="spentUsd" value="0.00419475" />
@@ -102,6 +109,7 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/PP-Project1-master/src/main/java" />
       <recent name="C:\Users\thoma\Downloads\PP-Project1" />
     </key>
   </component>
@@ -153,6 +161,7 @@
       <option name="presentableId" value="Default" />
       <updated>1777931441027</updated>
       <workItem from="1777931443138" duration="6243000" />
+      <workItem from="1778185614555" duration="1502000" />
     </task>
     <task id="LOCAL-00001" summary="update some stuff">
       <option name="closed" value="true" />

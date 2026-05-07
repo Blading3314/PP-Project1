@@ -17,17 +17,18 @@
                 <Insets bottom="16.0" left="12.0" right="12.0" top="20.0" />
             </padding>
             <children>
-                <Label text="Spaces" textFill="#a8a8b0">
+                <Label text="%main.spaces" textFill="#a8a8b0">
                     <font>
                         <Font name="System Bold" size="11.0" />
                     </font>
                 </Label>
                 <Separator maxWidth="96.0" style="-fx-background-color: #4a4a52;" />
-                <ToggleButton fx:id="customersToggle" maxWidth="Infinity" mnemonicParsing="false" styleClass="stage-dock-toggle" text="Customers" toggleGroup="$moduleGroup" wrapText="true" />
-                <ToggleButton fx:id="employeesToggle" maxWidth="Infinity" mnemonicParsing="false" styleClass="stage-dock-toggle" text="Employees" toggleGroup="$moduleGroup" wrapText="true" />
-                <ToggleButton fx:id="comicsToggle" maxWidth="Infinity" mnemonicParsing="false" styleClass="stage-dock-toggle" text="Comics" toggleGroup="$moduleGroup" wrapText="true" />
-                <ToggleButton fx:id="ordersToggle" maxWidth="Infinity" mnemonicParsing="false" styleClass="stage-dock-toggle" text="Orders" toggleGroup="$moduleGroup" wrapText="true" />
+                <ToggleButton fx:id="customersToggle" maxWidth="Infinity" mnemonicParsing="false" styleClass="stage-dock-toggle" text="%main.customers" toggleGroup="$moduleGroup" wrapText="true" />
+                <ToggleButton fx:id="employeesToggle" maxWidth="Infinity" mnemonicParsing="false" styleClass="stage-dock-toggle" text="%main.employees" toggleGroup="$moduleGroup" wrapText="true" />
+                <ToggleButton fx:id="comicsToggle" maxWidth="Infinity" mnemonicParsing="false" styleClass="stage-dock-toggle" text="%main.comics" toggleGroup="$moduleGroup" wrapText="true" />
+                <ToggleButton fx:id="ordersToggle" maxWidth="Infinity" mnemonicParsing="false" styleClass="stage-dock-toggle" text="%main.orders" toggleGroup="$moduleGroup" wrapText="true" />
                 <Region VBox.vgrow="ALWAYS" />
+                <ComboBox fx:id="languageSelector" maxWidth="Infinity" promptText="Language" />
             </children>
         </VBox>
     </left>

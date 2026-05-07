@@ -11,11 +11,11 @@
 
             <HBox alignment="CENTER_LEFT" spacing="20" style="-fx-background-color: linear-gradient(to right, #000000, #681111); -fx-background-radius: 14; -fx-padding: 15;">
                 <children>
-                    <Label style="-fx-font-weight: bold;" text="Comic inventory" textFill="WHITE">
+                    <Label style="-fx-font-weight: bold;" text="%comic.title" textFill="WHITE">
                         <font><Font size="20" /></font>
                     </Label>
                     <Region HBox.hgrow="ALWAYS" />
-                    <Label text="Titles, issues, shelf stock, and list price" textFill="WHITE" />
+                    <Label text="%comic.description" textFill="WHITE" />
                 </children>
             </HBox>
 
@@ -28,19 +28,19 @@
                     <ColumnConstraints percentWidth="18" />
                 </columnConstraints>
                 <children>
-                    <Label text="Comic ID" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                    <Label text="%comic.id" GridPane.columnIndex="0" GridPane.rowIndex="0" />
                     <TextField fx:id="idField" editable="false" promptText="— select a row —" GridPane.columnIndex="0" GridPane.rowIndex="1" />
 
-                    <Label text="Title" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                    <Label text="%comic.title" GridPane.columnIndex="1" GridPane.rowIndex="0" />
                     <TextField fx:id="titleField" promptText="The Crimson Horizon" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
-                    <Label text="Issue (# or arc)" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+                    <Label text="%comic.issue" GridPane.columnIndex="2" GridPane.rowIndex="0" />
                     <TextField fx:id="issueField" promptText="#12" GridPane.columnIndex="2" GridPane.rowIndex="1" />
 
-                    <Label text="Publisher" GridPane.columnIndex="3" GridPane.rowIndex="0" />
+                    <Label text="%comic.publisher" GridPane.columnIndex="3" GridPane.rowIndex="0" />
                     <TextField fx:id="publisherField" promptText="Image Comics" GridPane.columnIndex="3" GridPane.rowIndex="1" />
 
-                    <Label text="List price (USD)" GridPane.columnIndex="4" GridPane.rowIndex="0" />
+                    <Label text="%comic.price" GridPane.columnIndex="4" GridPane.rowIndex="0" />
                     <TextField fx:id="priceField" promptText="19.99" GridPane.columnIndex="4" GridPane.rowIndex="1" />
                 </children>
                 <rowConstraints>
@@ -55,7 +55,7 @@
                     <ColumnConstraints hgrow="ALWAYS" percentWidth="75" />
                 </columnConstraints>
                 <children>
-                    <Label text="Copies in stock" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                    <Label text="%comic.stock" GridPane.columnIndex="0" GridPane.rowIndex="0" />
                     <TextField fx:id="stockField" promptText="0" GridPane.columnIndex="0" GridPane.rowIndex="1" />
                 </children>
                 <rowConstraints>
@@ -66,36 +66,36 @@
 
             <HBox spacing="10" style="-fx-background-color: white; -fx-background-radius: 14; -fx-padding: 12;">
                 <children>
-                    <TextField fx:id="searchField" promptText="Search title, issue, publisher…" style="-fx-background-color: #fff7ed; -fx-background-radius: 10; -fx-border-color: #832216; -fx-border-radius: 10;" HBox.hgrow="ALWAYS" />
-                    <Button fx:id="searchButton" style="-fx-background-color: linear-gradient(to right, #000000, #681111); -fx-text-fill: white; -fx-background-radius: 10;" text="Search" />
-                    <Button fx:id="clearButton" style="-fx-background-color: #fff7ed; -fx-border-color: #832216; -fx-border-radius: 10;" text="Clear" />
+                    <TextField fx:id="searchField" promptText="%comic.search.prompt" style="-fx-background-color: #fff7ed; -fx-background-radius: 10; -fx-border-color: #832216; -fx-border-radius: 10;" HBox.hgrow="ALWAYS" />
+                    <Button fx:id="searchButton" style="-fx-background-color: linear-gradient(to right, #000000, #681111); -fx-text-fill: white; -fx-background-radius: 10;" text="%comic.search.button" />
+                    <Button fx:id="clearButton" style="-fx-background-color: #fff7ed; -fx-border-color: #832216; -fx-border-radius: 10;" text="%comic.clear.button" />
                 </children>
             </HBox>
 
             <TableView fx:id="comicTable" style="-fx-background-radius: 12; -fx-border-color: #832216; -fx-border-radius: 12;" VBox.vgrow="ALWAYS">
                 <columns>
-                    <TableColumn fx:id="idColumn" prefWidth="60" text="ID" />
-                    <TableColumn fx:id="titleColumn" prefWidth="220" text="Title" />
-                    <TableColumn fx:id="issueColumn" prefWidth="90" text="Issue" />
-                    <TableColumn fx:id="publisherColumn" prefWidth="140" text="Publisher" />
-                    <TableColumn fx:id="priceColumn" prefWidth="80" text="Price" />
-                    <TableColumn fx:id="stockColumn" prefWidth="70" text="Stock" />
+                    <TableColumn fx:id="idColumn" prefWidth="60" text="%comic.table.id" />
+                    <TableColumn fx:id="titleColumn" prefWidth="220" text="%comic.table.title" />
+                    <TableColumn fx:id="issueColumn" prefWidth="90" text="%comic.table.issue" />
+                    <TableColumn fx:id="publisherColumn" prefWidth="140" text="%comic.table.publisher" />
+                    <TableColumn fx:id="priceColumn" prefWidth="80" text="%comic.table.price" />
+                    <TableColumn fx:id="stockColumn" prefWidth="70" text="%comic.table.stock" />
                 </columns>
             </TableView>
 
             <HBox spacing="15">
                 <VBox spacing="6" style="-fx-background-color: white; -fx-background-radius: 12; -fx-padding: 10;">
                     <children>
-                        <Label text="Titles in table:" />
+                        <Label text="%comic.comics.in.table" />
                         <Label fx:id="totalComicsLabel" style="-fx-font-weight: bold;" text="0" />
                     </children>
                 </VBox>
                 <Region HBox.hgrow="ALWAYS" />
                 <HBox spacing="10">
-                    <Button fx:id="addButton" style="-fx-background-color: linear-gradient(to right, #000000, #681111); -fx-text-fill: white; -fx-background-radius: 10;" text="Add comic" />
-                    <Button fx:id="updateButton" style="-fx-background-color: #832216; -fx-text-fill: white; -fx-background-radius: 10;" text="Save changes" />
-                    <Button fx:id="deleteButton" style="-fx-background-color: #681111; -fx-text-fill: white; -fx-background-radius: 10;" text="Remove" />
-                    <Button fx:id="refreshButton" style="-fx-background-color: #fff7ed; -fx-border-color: #832216; -fx-border-radius: 10;" text="Refresh" />
+                    <Button fx:id="addButton" style="-fx-background-color: linear-gradient(to right, #000000, #681111); -fx-text-fill: white; -fx-background-radius: 10;" text="%comic.new.comic" />
+                    <Button fx:id="updateButton" style="-fx-background-color: #832216; -fx-text-fill: white; -fx-background-radius: 10;" text="%comic.save.changes" />
+                    <Button fx:id="deleteButton" style="-fx-background-color: #681111; -fx-text-fill: white; -fx-background-radius: 10;" text="%comic.remove" />
+                    <Button fx:id="refreshButton" style="-fx-background-color: #fff7ed; -fx-border-color: #832216; -fx-border-radius: 10;" text="%comic.refresh" />
                 </HBox>
             </HBox>
 

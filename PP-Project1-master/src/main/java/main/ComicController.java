@@ -92,7 +92,11 @@ public class ComicController {
         });
         stockColumn.setCellValueFactory(cd -> new ReadOnlyObjectWrapper<>(cd.getValue().getStock()));
 
-        reloadFromDatabase();
+        // Initialize empty table - no data loading until search
+        allComics = FXCollections.observableArrayList();
+        filteredComics = new FilteredList<>(allComics, p -> false); // Start with no results
+        comicTable.setItems(filteredComics);
+        totalComicsLabel.setText("0");
 
         comicTable.getSelectionModel().selectedItemProperty().addListener((obs, oldV, c) -> {
             if (c != null) {
@@ -135,15 +139,21 @@ public class ComicController {
     }
 
     private void applySearchFilter() {
-        if (filteredComics == null) {
-            return;
-        }
         String q = searchField.getText() == null ? "" : searchField.getText().trim().toLowerCase(Locale.ROOT);
         if (q.isEmpty()) {
-            filteredComics.setPredicate(c -> true);
-            totalComicsLabel.setText(Integer.toString(allComics.size()));
+            // Clear table when search is empty
+            allComics.clear();
+            filteredComics.setPredicate(comic -> false);
+            totalComicsLabel.setText("0");
             return;
         }
+        
+        // Load data from database only when searching
+        List<Comic> comics = dao.getAllComics();
+        allComics = FXCollections.observableArrayList(comics);
+        filteredComics = new FilteredList<>(allComics, p -> false);
+        comicTable.setItems(filteredComics);
+        
         Predicate<Comic> match = c -> {
             String blob = (c.getName() + " " + c.getIssue() + " " + c.getPublisher() + " " + c.getComicID())
                     .toLowerCase(Locale.ROOT);

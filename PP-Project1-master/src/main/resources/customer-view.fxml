@@ -13,7 +13,7 @@
             <HBox alignment="CENTER_LEFT" spacing="20" style="-fx-background-color: linear-gradient(to right, #000000, #681111); -fx-background-radius: 14; -fx-padding: 15;">
 
                 <children>
-                    <Label style="-fx-font-weight: bold;" text="Customer Panel" textFill="WHITE">
+                    <Label style="-fx-font-weight: bold;" text="%customer.title" textFill="WHITE">
                         <font>
                             <Font size="20" />
                         </font>
@@ -21,7 +21,7 @@
 
                     <Region HBox.hgrow="ALWAYS" />
 
-                    <Label text="Manage customers and records" textFill="WHITE" />
+                    <Label text="%customer.description" textFill="WHITE" />
                 </children>
             </HBox>
 
@@ -36,16 +36,16 @@
                 </columnConstraints>
 
                 <children>
-                    <Label text="Customer ID" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                    <Label text="%customer.id" GridPane.columnIndex="0" GridPane.rowIndex="0" />
                     <TextField fx:id="idField" GridPane.columnIndex="0" GridPane.rowIndex="1" />
 
-                    <Label text="Name" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                    <Label text="%customer.name" GridPane.columnIndex="1" GridPane.rowIndex="0" />
                     <TextField fx:id="nameField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
-                    <Label text="Email" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+                    <Label text="%customer.email" GridPane.columnIndex="2" GridPane.rowIndex="0" />
                     <TextField fx:id="emailField" GridPane.columnIndex="2" GridPane.rowIndex="1" />
 
-                    <Label text="Phone" GridPane.columnIndex="3" GridPane.rowIndex="0" />
+                    <Label text="%customer.phone" GridPane.columnIndex="3" GridPane.rowIndex="0" />
                     <TextField fx:id="phoneField" GridPane.columnIndex="3" GridPane.rowIndex="1" />
                 </children>
             <rowConstraints>
@@ -58,11 +58,11 @@
             <HBox spacing="10" style="-fx-background-color: white; -fx-background-radius: 14; -fx-padding: 12;">
 
                 <children>
-                    <TextField fx:id="searchField" promptText="Search customers..." style="-fx-background-color: #fff7ed; -fx-background-radius: 10; -fx-border-color: #832216; -fx-border-radius: 10;" HBox.hgrow="ALWAYS" />
+                    <TextField fx:id="searchField" promptText="%customer.search.prompt" style="-fx-background-color: #fff7ed; -fx-background-radius: 10; -fx-border-color: #832216; -fx-border-radius: 10;" HBox.hgrow="ALWAYS" />
 
-                    <Button fx:id="searchButton" style="-fx-background-color: linear-gradient(to right, #000000, #681111); -fx-text-fill: white; -fx-background-radius: 10;" text="Search" />
+                    <Button fx:id="searchButton" style="-fx-background-color: linear-gradient(to right, #000000, #681111); -fx-text-fill: white; -fx-background-radius: 10;" text="%customer.search.button" />
 
-                    <Button fx:id="clearButton" style="-fx-background-color: #fff7ed; -fx-border-color: #832216; -fx-border-radius: 10;" text="Clear" />
+                    <Button fx:id="clearButton" style="-fx-background-color: #fff7ed; -fx-border-color: #832216; -fx-border-radius: 10;" text="%customer.clear.button" />
                 </children>
             </HBox>
 
@@ -70,10 +70,10 @@
             <TableView fx:id="customerTable" style="-fx-background-radius: 12; -fx-border-color: #832216; -fx-border-radius: 12;" VBox.vgrow="ALWAYS">
 
                 <columns>
-                    <TableColumn fx:id="idColumn" prefWidth="80" text="ID" />
-                    <TableColumn fx:id="nameColumn" prefWidth="200" text="Name" />
-                    <TableColumn fx:id="emailColumn" prefWidth="250" text="Email" />
-                    <TableColumn fx:id="phoneColumn" prefWidth="150" text="Phone" />
+                    <TableColumn fx:id="idColumn" prefWidth="80" text="%customer.table.id" />
+                    <TableColumn fx:id="nameColumn" prefWidth="200" text="%customer.table.name" />
+                    <TableColumn fx:id="emailColumn" prefWidth="250" text="%customer.table.email" />
+                    <TableColumn fx:id="phoneColumn" prefWidth="150" text="%customer.table.phone" />
                 </columns>
             </TableView>
 
@@ -84,13 +84,13 @@
 
                 <HBox spacing="10">
 
-                    <Button fx:id="addButton" style="-fx-background-color: linear-gradient(to right, #000000, #681111); -fx-text-fill: white; -fx-background-radius: 10;" text="Add" />
+                    <Button fx:id="addButton" style="-fx-background-color: linear-gradient(to right, #000000, #681111); -fx-text-fill: white; -fx-background-radius: 10;" text="%customer.new.customer" />
 
-                    <Button fx:id="updateButton" style="-fx-background-color: #832216; -fx-text-fill: white; -fx-background-radius: 10;" text="Update" />
+                    <Button fx:id="updateButton" style="-fx-background-color: #832216; -fx-text-fill: white; -fx-background-radius: 10;" text="%customer.save.changes" />
 
-                    <Button fx:id="deleteButton" style="-fx-background-color: #681111; -fx-text-fill: white; -fx-background-radius: 10;" text="Delete" />
+                    <Button fx:id="deleteButton" style="-fx-background-color: #681111; -fx-text-fill: white; -fx-background-radius: 10;" text="%customer.remove" />
 
-                    <Button fx:id="refreshButton" style="-fx-background-color: #fff7ed; -fx-border-color: #832216; -fx-border-radius: 10;" text="Refresh" />
+                    <Button fx:id="refreshButton" style="-fx-background-color: #fff7ed; -fx-border-color: #832216; -fx-border-radius: 10;" text="%customer.refresh" />
                 </HBox>
             </HBox>
 

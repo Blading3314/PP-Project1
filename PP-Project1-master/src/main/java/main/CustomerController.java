@@ -67,7 +67,10 @@ public class CustomerController {
         emailColumn.setCellValueFactory(cd -> new ReadOnlyStringWrapper(cd.getValue().getEmail()));
         phoneColumn.setCellValueFactory(cd -> new ReadOnlyStringWrapper(cd.getValue().getPhoneNumber()));
 
-        reloadFromDatabase();
+        // Initialize empty table - no data loading until search
+        allCustomers = FXCollections.observableArrayList();
+        filteredCustomers = new FilteredList<>(allCustomers, p -> false); // Start with no results
+        customerTable.setItems(filteredCustomers);
 
         customerTable.getSelectionModel().selectedItemProperty().addListener((obs, oldV, c) -> {
             if (c != null) {
@@ -100,14 +103,20 @@ public class CustomerController {
     }
 
     private void applySearchFilter() {
-        if (filteredCustomers == null) {
-            return;
-        }
         String q = searchField.getText() == null ? "" : searchField.getText().trim().toLowerCase(Locale.ROOT);
         if (q.isEmpty()) {
-            filteredCustomers.setPredicate(customer -> true);
+            // Clear table when search is empty
+            allCustomers.clear();
+            filteredCustomers.setPredicate(customer -> false);
             return;
         }
+        
+        // Load data from database only when searching
+        List<Customer> customers = dao.getAllCustomers();
+        allCustomers = FXCollections.observableArrayList(customers);
+        filteredCustomers = new FilteredList<>(allCustomers, p -> false);
+        customerTable.setItems(filteredCustomers);
+        
         Predicate<Customer> match = c -> {
             String blob = (c.getFirstName() + " " + c.getLastName() + " " + c.getEmail() + " " + c.getPhoneNumber()).toLowerCase(Locale.ROOT);
             return blob.contains(q);
