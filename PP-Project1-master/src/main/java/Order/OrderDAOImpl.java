@@ -18,6 +18,7 @@ public class OrderDAOImpl implements OrderDAO {
 
     static {
         ensureQuantityColumn();
+        ensureCompletedStatusAllowed();
     }
 
     private static void ensureQuantityColumn() {
@@ -30,6 +31,42 @@ public class OrderDAOImpl implements OrderDAO {
             }
         } catch (SQLException e) {
             // no database file yet
+        }
+    }
+
+    private static void ensureCompletedStatusAllowed() {
+        String schemaSql = "SELECT sql FROM sqlite_master WHERE type = 'table' AND name = 'Order'";
+        try (Connection conn = DBConnectionUtility.getConnection();
+             Statement st = conn.createStatement()) {
+            String createSql;
+            try (ResultSet rs = st.executeQuery(schemaSql)) {
+                if (!rs.next()) {
+                    return;
+                }
+                createSql = rs.getString(1);
+            }
+            if (createSql != null && createSql.contains("'COMPLETED'")) {
+                return;
+            }
+
+            st.execute("PRAGMA foreign_keys = OFF");
+            st.execute("CREATE TABLE IF NOT EXISTS \"Order_new\" ("
+                    + "orderID INTEGER, "
+                    + "orderDate DATE NOT NULL, "
+                    + "comicID INTEGER, "
+                    + "customerID INTEGER, "
+                    + "Status VARCHAR(50) NOT NULL CHECK (Status IN ('CONFIRM', 'CANCELED', 'COMPLETED')), "
+                    + "quantity INTEGER NOT NULL DEFAULT 1, "
+                    + "PRIMARY KEY (orderID AUTOINCREMENT), "
+                    + "FOREIGN KEY (comicID) REFERENCES Comic (comicID), "
+                    + "FOREIGN KEY (customerID) REFERENCES Customer (customerID))");
+            st.execute("INSERT INTO \"Order_new\" (orderID, orderDate, comicID, customerID, Status, quantity) "
+                    + "SELECT orderID, orderDate, comicID, customerID, Status, quantity FROM " + ORDER_TABLE);
+            st.execute("DROP TABLE " + ORDER_TABLE);
+            st.execute("ALTER TABLE \"Order_new\" RENAME TO \"Order\"");
+            st.execute("PRAGMA foreign_keys = ON");
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
         }
     }
 

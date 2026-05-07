@@ -4,14 +4,14 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: linear-gradient(to bottom right, #fff7ed, #681111);" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.ComicController">
+<AnchorPane prefHeight="600.0" prefWidth="900.0" styleClass="screen-root" stylesheets="@stage-manager.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.ComicController">
 
     <children>
         <VBox spacing="15" AnchorPane.bottomAnchor="10" AnchorPane.leftAnchor="10" AnchorPane.rightAnchor="10" AnchorPane.topAnchor="10">
 
-            <HBox alignment="CENTER_LEFT" spacing="20" style="-fx-background-color: linear-gradient(to right, #000000, #681111); -fx-background-radius: 14; -fx-padding: 15;">
+            <HBox alignment="CENTER_LEFT" spacing="20" styleClass="module-header">
                 <children>
-                    <Label style="-fx-font-weight: bold;" text="%comic.title" textFill="WHITE">
+                    <Label style="-fx-font-weight: bold;" text="%comic.panel.title" textFill="WHITE">
                         <font><Font size="20" /></font>
                     </Label>
                     <Region HBox.hgrow="ALWAYS" />
@@ -19,7 +19,7 @@
                 </children>
             </HBox>
 
-            <GridPane hgap="12" style="-fx-background-color: white; -fx-background-radius: 14; -fx-padding: 15;" vgap="10">
+            <GridPane hgap="12" styleClass="surface" vgap="10">
                 <columnConstraints>
                     <ColumnConstraints percentWidth="20" />
                     <ColumnConstraints percentWidth="25" />
@@ -49,7 +49,7 @@
                 </rowConstraints>
             </GridPane>
 
-            <GridPane hgap="12" style="-fx-background-color: white; -fx-background-radius: 14; -fx-padding: 15;" vgap="6">
+            <GridPane hgap="12" styleClass="surface" vgap="6">
                 <columnConstraints>
                     <ColumnConstraints percentWidth="25" />
                     <ColumnConstraints hgrow="ALWAYS" percentWidth="75" />
@@ -64,15 +64,28 @@
                 </rowConstraints>
             </GridPane>
 
-            <HBox spacing="10" style="-fx-background-color: white; -fx-background-radius: 14; -fx-padding: 12;">
+            <GridPane hgap="10" styleClass="surface" vgap="8">
+                <columnConstraints>
+                    <ColumnConstraints percentWidth="13" />
+                    <ColumnConstraints percentWidth="23" />
+                    <ColumnConstraints percentWidth="16" />
+                    <ColumnConstraints percentWidth="20" />
+                    <ColumnConstraints percentWidth="8" />
+                    <ColumnConstraints percentWidth="10" />
+                    <ColumnConstraints percentWidth="10" />
+                </columnConstraints>
                 <children>
-                    <TextField fx:id="searchField" promptText="%comic.search.prompt" style="-fx-background-color: #fff7ed; -fx-background-radius: 10; -fx-border-color: #832216; -fx-border-radius: 10;" HBox.hgrow="ALWAYS" />
-                    <Button fx:id="searchButton" style="-fx-background-color: linear-gradient(to right, #000000, #681111); -fx-text-fill: white; -fx-background-radius: 10;" text="%comic.search.button" />
-                    <Button fx:id="clearButton" style="-fx-background-color: #fff7ed; -fx-border-color: #832216; -fx-border-radius: 10;" text="%comic.clear.button" />
+                    <TextField fx:id="searchIdField" promptText="%comic.id" GridPane.columnIndex="0" />
+                    <TextField fx:id="searchTitleField" promptText="%comic.title" GridPane.columnIndex="1" />
+                    <TextField fx:id="searchIssueField" promptText="%comic.issue" GridPane.columnIndex="2" />
+                    <TextField fx:id="searchPublisherField" promptText="%comic.publisher" GridPane.columnIndex="3" />
+                    <Button fx:id="searchButton" maxWidth="Infinity" styleClass="primary-button" text="%comic.search.button" GridPane.columnIndex="4" />
+                    <Button fx:id="showAllButton" maxWidth="Infinity" styleClass="quiet-button" text="%common.show.all" GridPane.columnIndex="5" />
+                    <Button fx:id="clearButton" maxWidth="Infinity" styleClass="quiet-button" text="%comic.clear.button" GridPane.columnIndex="6" />
                 </children>
-            </HBox>
+            </GridPane>
 
-            <TableView fx:id="comicTable" style="-fx-background-radius: 12; -fx-border-color: #832216; -fx-border-radius: 12;" VBox.vgrow="ALWAYS">
+            <TableView fx:id="comicTable" VBox.vgrow="ALWAYS">
                 <columns>
                     <TableColumn fx:id="idColumn" prefWidth="60" text="%comic.table.id" />
                     <TableColumn fx:id="titleColumn" prefWidth="220" text="%comic.table.title" />
@@ -84,7 +97,7 @@
             </TableView>
 
             <HBox spacing="15">
-                <VBox spacing="6" style="-fx-background-color: white; -fx-background-radius: 12; -fx-padding: 10;">
+                <VBox spacing="6" styleClass="metric-tile">
                     <children>
                         <Label text="%comic.comics.in.table" />
                         <Label fx:id="totalComicsLabel" style="-fx-font-weight: bold;" text="0" />
@@ -92,10 +105,10 @@
                 </VBox>
                 <Region HBox.hgrow="ALWAYS" />
                 <HBox spacing="10">
-                    <Button fx:id="addButton" style="-fx-background-color: linear-gradient(to right, #000000, #681111); -fx-text-fill: white; -fx-background-radius: 10;" text="%comic.new.comic" />
-                    <Button fx:id="updateButton" style="-fx-background-color: #832216; -fx-text-fill: white; -fx-background-radius: 10;" text="%comic.save.changes" />
-                    <Button fx:id="deleteButton" style="-fx-background-color: #681111; -fx-text-fill: white; -fx-background-radius: 10;" text="%comic.remove" />
-                    <Button fx:id="refreshButton" style="-fx-background-color: #fff7ed; -fx-border-color: #832216; -fx-border-radius: 10;" text="%comic.refresh" />
+                    <Button fx:id="addButton" styleClass="primary-button" text="%comic.new.comic" />
+                    <Button fx:id="updateButton" styleClass="quiet-button" text="%comic.save.changes" />
+                    <Button fx:id="deleteButton" styleClass="danger-button" text="%comic.remove" />
+                    <Button fx:id="refreshButton" styleClass="quiet-button" text="%comic.refresh" />
                 </HBox>
             </HBox>
 

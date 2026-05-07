@@ -14,7 +14,7 @@ import java.util.Optional;
 public class EmployeeDAOImpl implements EmployeeDAO {
 
     private static final String SELECT_PUBLIC = """
-            SELECT employeeID, firstName, lastName, phoneNumber, email
+            SELECT employeeID, firstName, lastName
             FROM Employee
             """;
 
@@ -23,8 +23,8 @@ public class EmployeeDAOImpl implements EmployeeDAO {
                 rs.getInt("employeeID"),
                 nullToEmpty(rs.getString("firstName")),
                 nullToEmpty(rs.getString("lastName")),
-                nullToEmpty(rs.getString("phoneNumber")),
-                nullToEmpty(rs.getString("email")));
+                "",
+                "");
     }
 
     private static String nullToEmpty(String s) {
@@ -110,14 +110,12 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 
     @Override
     public void updateEmployee(Employee employee) {
-        String sql = "UPDATE Employee SET firstName = ?, lastName = ?, phoneNumber = ?, email = ? WHERE employeeID = ?";
+        String sql = "UPDATE Employee SET firstName = ?, lastName = ? WHERE employeeID = ?";
         try (Connection conn = DBConnectionUtility.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, nullToEmpty(employee.getFirstName()));
             ps.setString(2, nullToEmpty(employee.getLastName()));
-            ps.setString(3, nullToEmpty(employee.getPhoneNumber()));
-            ps.setString(4, nullToEmpty(employee.getEmail()));
-            ps.setInt(5, employee.getEmployeeID());
+            ps.setInt(3, employee.getEmployeeID());
             ps.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -126,13 +124,11 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 
     @Override
     public void saveEmployee(Employee employee) {
-        String sql = "INSERT INTO Employee (firstName, lastName, phoneNumber, email) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO Employee (firstName, lastName) VALUES (?, ?)";
         try (Connection conn = DBConnectionUtility.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, nullToEmpty(employee.getFirstName()));
             ps.setString(2, nullToEmpty(employee.getLastName()));
-            ps.setString(3, nullToEmpty(employee.getPhoneNumber()));
-            ps.setString(4, nullToEmpty(employee.getEmail()));
             ps.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());

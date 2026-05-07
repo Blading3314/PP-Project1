@@ -4,12 +4,12 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="650.0" prefWidth="950.0" style="-fx-background-color: linear-gradient(to bottom right, #fff7ed, #681111);" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.OrderController">
+<AnchorPane prefHeight="650.0" prefWidth="950.0" styleClass="screen-root" stylesheets="@stage-manager.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.OrderController">
 
     <children>
         <VBox spacing="15" AnchorPane.bottomAnchor="10" AnchorPane.leftAnchor="10" AnchorPane.rightAnchor="10" AnchorPane.topAnchor="10">
 
-            <HBox alignment="CENTER_LEFT" spacing="20" style="-fx-background-color: linear-gradient(to right, #000000, #681111); -fx-background-radius: 14; -fx-padding: 15;">
+            <HBox alignment="CENTER_LEFT" spacing="20" styleClass="module-header">
                 <children>
                     <Label text="%order.title" textFill="WHITE">
                         <font><Font size="20" /></font>
@@ -19,7 +19,7 @@
                 </children>
             </HBox>
 
-            <GridPane hgap="12" style="-fx-background-color: white; -fx-background-radius: 14; -fx-padding: 15;" vgap="10">
+            <GridPane hgap="12" styleClass="surface" vgap="10">
                 <columnConstraints>
                     <ColumnConstraints percentWidth="16" />
                     <ColumnConstraints percentWidth="22" />
@@ -53,15 +53,30 @@
                 </rowConstraints>
             </GridPane>
 
-            <HBox spacing="10" style="-fx-background-color: white; -fx-background-radius: 14; -fx-padding: 12;">
+            <GridPane hgap="10" styleClass="surface" vgap="8">
+                <columnConstraints>
+                    <ColumnConstraints percentWidth="12" />
+                    <ColumnConstraints percentWidth="16" />
+                    <ColumnConstraints percentWidth="13" />
+                    <ColumnConstraints percentWidth="13" />
+                    <ColumnConstraints percentWidth="18" />
+                    <ColumnConstraints percentWidth="8" />
+                    <ColumnConstraints percentWidth="10" />
+                    <ColumnConstraints percentWidth="10" />
+                </columnConstraints>
                 <children>
-                    <TextField fx:id="searchField" promptText="%order.search.prompt" style="-fx-background-color: #fff7ed; -fx-background-radius: 10; -fx-border-color: #832216; -fx-border-radius: 10;" HBox.hgrow="ALWAYS" />
-                    <Button fx:id="searchButton" style="-fx-background-color: linear-gradient(to right, #000000, #681111); -fx-text-fill: white; -fx-background-radius: 10;" text="%order.search.button" />
-                    <Button fx:id="clearButton" style="-fx-background-color: #fff7ed; -fx-border-color: #832216; -fx-border-radius: 10;" text="%order.clear.button" />
+                    <TextField fx:id="searchOrderIdField" promptText="%order.id" GridPane.columnIndex="0" />
+                    <TextField fx:id="searchDateField" promptText="%order.date" GridPane.columnIndex="1" />
+                    <TextField fx:id="searchCustomerIdField" promptText="%order.customer.id" GridPane.columnIndex="2" />
+                    <TextField fx:id="searchComicIdField" promptText="%order.comic.id" GridPane.columnIndex="3" />
+                    <ComboBox fx:id="filterStatusCombo" editable="false" maxWidth="Infinity" GridPane.columnIndex="4" />
+                    <Button fx:id="searchButton" maxWidth="Infinity" styleClass="primary-button" text="%order.search.button" GridPane.columnIndex="5" />
+                    <Button fx:id="showAllButton" maxWidth="Infinity" styleClass="quiet-button" text="%common.show.all" GridPane.columnIndex="6" />
+                    <Button fx:id="clearButton" maxWidth="Infinity" styleClass="quiet-button" text="%order.clear.button" GridPane.columnIndex="7" />
                 </children>
-            </HBox>
+            </GridPane>
 
-            <TableView fx:id="orderTable" style="-fx-background-radius: 12; -fx-border-color: #832216; -fx-border-radius: 12;" VBox.vgrow="ALWAYS">
+            <TableView fx:id="orderTable" VBox.vgrow="ALWAYS">
                 <columns>
                     <TableColumn fx:id="orderIdColumn" prefWidth="80" text="%order.table.id" />
                     <TableColumn fx:id="orderDateColumn" prefWidth="110" text="%order.table.date" />
@@ -73,7 +88,7 @@
             </TableView>
 
             <HBox spacing="15">
-                <VBox spacing="6" style="-fx-background-color: white; -fx-background-radius: 12; -fx-padding: 10;">
+                <VBox spacing="6" styleClass="metric-tile">
                     <children>
                         <Label text="%order.orders.in.table" />
                         <Label fx:id="totalOrdersLabel" style="-fx-font-weight: bold;" text="0" />
@@ -81,10 +96,10 @@
                 </VBox>
                 <Region HBox.hgrow="ALWAYS" />
                 <HBox spacing="10">
-                    <Button fx:id="addButton" style="-fx-background-color: linear-gradient(to right, #000000, #681111); -fx-text-fill: white; -fx-background-radius: 10;" text="%order.new.order" />
-                    <Button fx:id="updateButton" style="-fx-background-color: #832216; -fx-text-fill: white; -fx-background-radius: 10;" text="%order.save.changes" />
-                    <Button fx:id="deleteButton" style="-fx-background-color: #681111; -fx-text-fill: white; -fx-background-radius: 10;" text="%order.remove" />
-                    <Button fx:id="refreshButton" style="-fx-background-color: #fff7ed; -fx-border-color: #832216; -fx-border-radius: 10;" text="%order.refresh" />
+                    <Button fx:id="addButton" styleClass="primary-button" text="%order.new.order" />
+                    <Button fx:id="updateButton" styleClass="quiet-button" text="%order.save.changes" />
+                    <Button fx:id="deleteButton" styleClass="danger-button" text="%order.remove" />
+                    <Button fx:id="refreshButton" styleClass="quiet-button" text="%order.refresh" />
                 </HBox>
             </HBox>
 

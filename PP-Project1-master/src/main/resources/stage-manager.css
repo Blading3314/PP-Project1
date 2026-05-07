@@ -1,16 +1,213 @@
+.root {
+    -fx-font-family: "Segoe UI", "SF Pro Text", "Inter", "Arial";
+    -fx-background-color: #0b0b0f;
+    -fx-text-fill: #f5f5f7;
+}
+
+.screen-root {
+    -fx-background-color: #0b0b0f;
+}
+
+.app-shell {
+    -fx-background-color: #0b0b0f;
+}
+
+.side-nav {
+    -fx-background-color: #121216;
+    -fx-border-color: #24242a;
+    -fx-border-width: 0 1 0 0;
+}
+
+.workspace {
+    -fx-background-color: #0b0b0f;
+}
+
+.module-header {
+    -fx-background-color: #19191f;
+    -fx-background-radius: 8;
+    -fx-border-color: #2a2a31;
+    -fx-border-radius: 8;
+    -fx-border-width: 1;
+    -fx-padding: 16 18;
+}
+
+.surface {
+    -fx-background-color: #16161c;
+    -fx-background-radius: 8;
+    -fx-border-color: #282830;
+    -fx-border-radius: 8;
+    -fx-border-width: 1;
+    -fx-padding: 14;
+}
+
+.metric-tile {
+    -fx-background-color: #16161c;
+    -fx-background-radius: 8;
+    -fx-border-color: #282830;
+    -fx-border-radius: 8;
+    -fx-border-width: 1;
+    -fx-padding: 10 12;
+}
+
+.label {
+    -fx-text-fill: #f5f5f7;
+}
+
+.module-header .label {
+    -fx-text-fill: #f5f5f7;
+}
+
+.text-field,
+.combo-box,
+.choice-box {
+    -fx-background-color: #202027;
+    -fx-background-radius: 8;
+    -fx-border-color: #353540;
+    -fx-border-radius: 8;
+    -fx-border-width: 1;
+    -fx-text-fill: #f5f5f7;
+    -fx-prompt-text-fill: #8d8d96;
+    -fx-padding: 8 10;
+}
+
+.text-field:focused,
+.combo-box:focused {
+    -fx-border-color: #7aa2ff;
+    -fx-background-color: #24242c;
+}
+
+.combo-box .list-cell {
+    -fx-text-fill: #f5f5f7;
+    -fx-background-color: transparent;
+}
+
+.combo-box-popup .list-view {
+    -fx-background-color: #202027;
+    -fx-border-color: #353540;
+}
+
+.combo-box-popup .list-cell {
+    -fx-background-color: #202027;
+    -fx-text-fill: #f5f5f7;
+}
+
+.combo-box-popup .list-cell:hover {
+    -fx-background-color: #2d2d36;
+}
+
+.button {
+    -fx-background-color: #2a2a32;
+    -fx-background-radius: 8;
+    -fx-border-color: #3a3a44;
+    -fx-border-radius: 8;
+    -fx-border-width: 1;
+    -fx-text-fill: #f5f5f7;
+    -fx-padding: 8 12;
+    -fx-font-weight: 600;
+}
+
+.button:hover {
+    -fx-background-color: #34343d;
+}
+
+.button:pressed {
+    -fx-background-color: #23232a;
+}
+
+.primary-button {
+    -fx-background-color: #0a84ff;
+    -fx-border-color: #0a84ff;
+    -fx-text-fill: white;
+}
+
+.primary-button:hover {
+    -fx-background-color: #2997ff;
+}
+
+.danger-button {
+    -fx-background-color: #3a2327;
+    -fx-border-color: #5b3038;
+    -fx-text-fill: #ffb3bd;
+}
+
+.quiet-button {
+    -fx-background-color: #202027;
+    -fx-border-color: #353540;
+    -fx-text-fill: #d6d6dc;
+}
+
 .stage-dock-toggle {
-    -fx-background-radius: 10;
-    -fx-padding: 10 8;
-    -fx-background-color: #3a3a42;
-    -fx-text-fill: #e8e8ec;
+    -fx-background-radius: 8;
+    -fx-padding: 10 10;
+    -fx-background-color: transparent;
+    -fx-text-fill: #b8b8c2;
     -fx-font-size: 12px;
+    -fx-alignment: CENTER_LEFT;
 }
 
 .stage-dock-toggle:hover {
-    -fx-background-color: #4a4a54;
+    -fx-background-color: #1d1d24;
+    -fx-text-fill: #f5f5f7;
 }
 
 .stage-dock-toggle:selected {
-    -fx-background-color: #6a6a78;
-    -fx-text-fill: white;
+    -fx-background-color: #242936;
+    -fx-text-fill: #f5f5f7;
+}
+
+.separator .line {
+    -fx-border-color: #2a2a31;
+}
+
+.table-view {
+    -fx-background-color: #141419;
+    -fx-background-radius: 8;
+    -fx-border-color: #282830;
+    -fx-border-radius: 8;
+    -fx-border-width: 1;
+    -fx-table-cell-border-color: transparent;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: #1c1c22;
+    -fx-background-radius: 8 8 0 0;
+}
+
+.table-view .column-header,
+.table-view .filler {
+    -fx-background-color: transparent;
+    -fx-size: 36;
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: #b8b8c2;
+    -fx-font-weight: 700;
+}
+
+.table-row-cell {
+    -fx-background-color: #141419;
+    -fx-border-color: transparent transparent #24242a transparent;
+    -fx-table-cell-border-color: transparent;
+}
+
+.table-row-cell:odd {
+    -fx-background-color: #17171d;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: #24324a;
+}
+
+.table-cell {
+    -fx-text-fill: #eeeef2;
+    -fx-padding: 8 10;
+}
+
+.scroll-bar {
+    -fx-background-color: #141419;
+}
+
+.scroll-bar .thumb {
+    -fx-background-color: #3a3a44;
+    -fx-background-radius: 8;
 }

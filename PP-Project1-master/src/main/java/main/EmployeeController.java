@@ -3,6 +3,7 @@ package main;
 import Employee.Employee;
 import Employee.EmployeeDAO;
 import Employee.EmployeeDAOImpl;
+import I18n.I18nManager;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
@@ -20,6 +21,7 @@ import java.util.Locale;
 import java.util.function.Predicate;
 
 public class EmployeeController {
+    private final I18nManager i18n = I18nManager.getInstance();
 
     @FXML
     private TextField idField;
@@ -28,13 +30,15 @@ public class EmployeeController {
     @FXML
     private TextField lastNameField;
     @FXML
-    private TextField phoneField;
+    private TextField searchIdField;
     @FXML
-    private TextField emailField;
+    private TextField searchFirstNameField;
     @FXML
-    private TextField searchField;
+    private TextField searchLastNameField;
     @FXML
     private Button searchButton;
+    @FXML
+    private Button showAllButton;
     @FXML
     private Button clearButton;
     @FXML
@@ -45,10 +49,6 @@ public class EmployeeController {
     private TableColumn<Employee, String> fnameColumn;
     @FXML
     private TableColumn<Employee, String> lnameColumn;
-    @FXML
-    private TableColumn<Employee, String> phoneColumn;
-    @FXML
-    private TableColumn<Employee, String> emailColumn;
     @FXML
     private Button addButton;
     @FXML
@@ -67,8 +67,6 @@ public class EmployeeController {
         idColumn.setCellValueFactory(cd -> new ReadOnlyObjectWrapper<>(cd.getValue().getEmployeeID()));
         fnameColumn.setCellValueFactory(cd -> new ReadOnlyStringWrapper(cd.getValue().getFirstName()));
         lnameColumn.setCellValueFactory(cd -> new ReadOnlyStringWrapper(cd.getValue().getLastName()));
-        phoneColumn.setCellValueFactory(cd -> new ReadOnlyStringWrapper(cd.getValue().getPhoneNumber()));
-        emailColumn.setCellValueFactory(cd -> new ReadOnlyStringWrapper(cd.getValue().getEmail()));
 
         // Initialize empty table - no data loading until search
         allEmployees = FXCollections.observableArrayList();
@@ -80,17 +78,18 @@ public class EmployeeController {
                 idField.setText(Integer.toString(row.getEmployeeID()));
                 firstNameField.setText(row.getFirstName());
                 lastNameField.setText(row.getLastName());
-                phoneField.setText(row.getPhoneNumber());
-                emailField.setText(row.getEmail());
             }
         });
 
         searchButton.setOnAction(e -> applySearchFilter());
+        showAllButton.setOnAction(e -> showAllEmployees());
         clearButton.setOnAction(e -> {
-            searchField.clear();
+            clearSearchFields();
             applySearchFilter();
         });
-        searchField.textProperty().addListener((o, a, b) -> applySearchFilter());
+        searchIdField.textProperty().addListener((o, a, b) -> applySearchFilter());
+        searchFirstNameField.textProperty().addListener((o, a, b) -> applySearchFilter());
+        searchLastNameField.textProperty().addListener((o, a, b) -> applySearchFilter());
 
         addButton.setOnAction(e -> onAdd());
         updateButton.setOnAction(e -> onUpdate());
@@ -99,48 +98,54 @@ public class EmployeeController {
     }
 
     private void reloadFromDatabase() {
+        showAllEmployees();
+    }
+
+    private void showAllEmployees() {
         List<Employee> rows = dao.getAllEmployees();
         allEmployees = FXCollections.observableArrayList(rows);
         filteredEmployees = new FilteredList<>(allEmployees, p -> true);
         employeeTable.setItems(filteredEmployees);
-        applySearchFilter();
     }
 
     private void applySearchFilter() {
-        String q = searchField.getText() == null ? "" : searchField.getText().trim().toLowerCase(Locale.ROOT);
-        if (q.isEmpty()) {
-            // Clear table when search is empty
+        String id = normalized(searchIdField);
+        String firstName = normalized(searchFirstNameField);
+        String lastName = normalized(searchLastNameField);
+        if (id.isEmpty() && firstName.isEmpty() && lastName.isEmpty()) {
             allEmployees.clear();
             filteredEmployees.setPredicate(employee -> false);
             return;
         }
-        
-        // Load data from database only when searching
+
         List<Employee> employees = dao.getAllEmployees();
         allEmployees = FXCollections.observableArrayList(employees);
         filteredEmployees = new FilteredList<>(allEmployees, p -> false);
         employeeTable.setItems(filteredEmployees);
         
         Predicate<Employee> match = r -> {
-            String blob = (r.getFirstName() + " " + r.getLastName() + " " + r.getPhoneNumber() + " "
-                    + r.getEmail() + " " + r.getEmployeeID()).toLowerCase(Locale.ROOT);
-            return blob.contains(q);
+            return containsIfPresent(Integer.toString(r.getEmployeeID()), id)
+                    && containsIfPresent(safeLower(r.getFirstName()), firstName)
+                    && containsIfPresent(safeLower(r.getLastName()), lastName);
         };
         filteredEmployees.setPredicate(match);
+    }
+
+    private void clearSearchFields() {
+        searchIdField.clear();
+        searchFirstNameField.clear();
+        searchLastNameField.clear();
     }
 
     private void onAdd() {
         if (!validateNameFields()) {
             return;
         }
-        if (!validateEmailOptional()) {
-            return;
-        }
         Employee e = new Employee(0,
                 firstNameField.getText().trim(),
                 lastNameField.getText().trim(),
-                textOrEmpty(phoneField),
-                textOrEmpty(emailField));
+                "",
+                "");
         dao.saveEmployee(e);
         reloadFromDatabase();
         clearForm();
@@ -149,20 +154,17 @@ public class EmployeeController {
     private void onUpdate() {
         int id = parseId(idField.getText());
         if (id <= 0) {
-            showInfo("Select an employee", "Choose someone in the table (or add a new person first).");
+            showInfo("alert.employee.select.title", "alert.employee.select.update");
             return;
         }
         if (!validateNameFields()) {
             return;
         }
-        if (!validateEmailOptional()) {
-            return;
-        }
         Employee e = new Employee(id,
                 firstNameField.getText().trim(),
                 lastNameField.getText().trim(),
-                textOrEmpty(phoneField),
-                textOrEmpty(emailField));
+                "",
+                "");
         dao.updateEmployee(e);
         reloadFromDatabase();
     }
@@ -170,7 +172,7 @@ public class EmployeeController {
     private void onDelete() {
         int id = parseId(idField.getText());
         if (id <= 0) {
-            showInfo("Select an employee", "Pick a row to remove, or enter a valid employee ID.");
+            showInfo("alert.employee.select.title", "alert.employee.select.remove");
             return;
         }
         dao.deleteEmployeeByID(id);
@@ -182,26 +184,10 @@ public class EmployeeController {
         String fn = firstNameField.getText() == null ? "" : firstNameField.getText().trim();
         String ln = lastNameField.getText() == null ? "" : lastNameField.getText().trim();
         if (fn.isEmpty() || ln.isEmpty()) {
-            showInfo("Name required", "Please enter both first and last name.");
+            showInfo("alert.employee.name.title", "alert.employee.name.required");
             return false;
         }
         return true;
-    }
-
-    private boolean validateEmailOptional() {
-        String em = emailField.getText() == null ? "" : emailField.getText().trim();
-        if (em.isEmpty()) {
-            return true;
-        }
-        if (!em.contains("@") || em.length() < 5) {
-            showInfo("Check email", "That email does not look valid. Leave it blank or use something like name@store.com.");
-            return false;
-        }
-        return true;
-    }
-
-    private static String textOrEmpty(TextField field) {
-        return field.getText() == null ? "" : field.getText().trim();
     }
 
     private static int parseId(String raw) {
@@ -219,16 +205,26 @@ public class EmployeeController {
         idField.clear();
         firstNameField.clear();
         lastNameField.clear();
-        phoneField.clear();
-        emailField.clear();
         employeeTable.getSelectionModel().clearSelection();
     }
 
-    private static void showInfo(String title, String message) {
+    private static String normalized(TextField field) {
+        return field.getText() == null ? "" : field.getText().trim().toLowerCase(Locale.ROOT);
+    }
+
+    private static String safeLower(String value) {
+        return value == null ? "" : value.toLowerCase(Locale.ROOT);
+    }
+
+    private static boolean containsIfPresent(String value, String filter) {
+        return filter.isEmpty() || value.contains(filter);
+    }
+
+    private void showInfo(String titleKey, String messageKey, Object... args) {
         Alert a = new Alert(Alert.AlertType.INFORMATION);
-        a.setTitle(title);
+        a.setTitle(i18n.getString(titleKey));
         a.setHeaderText(null);
-        a.setContentText(message);
+        a.setContentText(i18n.getString(messageKey, args));
         a.showAndWait();
     }
 }

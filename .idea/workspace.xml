@@ -5,24 +5,25 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="aa8d4e0e-55e7-4e04-a8c7-770a0144b1e1" name="Changes" comment="update some stuff">
-      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dataSources/2820d557-72fc-4ab2-a1df-bda01a25b266.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/2820d557-72fc-4ab2-a1df-bda01a25b266.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/data_source_mapping.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/data_source_mapping.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/java/Employee/EmployeeDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/PP-Project1-master/src/main/java/Employee/EmployeeDAOImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/java/I18n/I18nTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/java/Order/OrderDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/PP-Project1-master/src/main/java/Order/OrderDAOImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/java/main/ComicController.java" beforeDir="false" afterPath="$PROJECT_DIR$/PP-Project1-master/src/main/java/main/ComicController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/java/main/CustomerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/PP-Project1-master/src/main/java/main/CustomerController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/java/main/EmployeeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/PP-Project1-master/src/main/java/main/EmployeeController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/java/main/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/PP-Project1-master/src/main/java/main/MainController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/java/main/OrderController.java" beforeDir="false" afterPath="$PROJECT_DIR$/PP-Project1-master/src/main/java/main/OrderController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/java/main/TestFX.java" beforeDir="false" afterPath="$PROJECT_DIR$/PP-Project1-master/src/main/java/main/TestFX.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/resources/comic-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/PP-Project1-master/src/main/resources/comic-view.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/resources/customer-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/PP-Project1-master/src/main/resources/customer-view.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/resources/employee-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/PP-Project1-master/src/main/resources/employee-view.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/resources/i18n/messages.properties" beforeDir="false" afterPath="$PROJECT_DIR$/PP-Project1-master/src/main/resources/i18n/messages.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/resources/i18n/messages_es.properties" beforeDir="false" afterPath="$PROJECT_DIR$/PP-Project1-master/src/main/resources/i18n/messages_es.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/resources/i18n/messages_fr.properties" beforeDir="false" afterPath="$PROJECT_DIR$/PP-Project1-master/src/main/resources/i18n/messages_fr.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/resources/main-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/PP-Project1-master/src/main/resources/main-view.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/resources/order-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/PP-Project1-master/src/main/resources/order-view.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/resources/stage-manager.css" beforeDir="false" afterPath="$PROJECT_DIR$/PP-Project1-master/src/main/resources/stage-manager.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PP-Project1-master/test.db" beforeDir="false" afterPath="$PROJECT_DIR$/PP-Project1-master/test.db" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -117,7 +118,21 @@
     <configuration name="Unnamed" type="MavenRunConfiguration" factoryName="Maven">
       <MavenSettings>
         <option name="myGeneralSettings" />
-        <option name="myRunnerSettings" />
+        <option name="myRunnerSettings">
+          <MavenRunnerSettings>
+            <option name="delegateBuildToMaven" value="false" />
+            <option name="environmentProperties">
+              <map />
+            </option>
+            <option name="jreName" value="#USE_PROJECT_JDK" />
+            <option name="mavenProperties">
+              <map />
+            </option>
+            <option name="passParentEnv" value="true" />
+            <option name="skipTests" value="false" />
+            <option name="vmOptions" value=" --enable-native-access=javafx.graphics" />
+          </MavenRunnerSettings>
+        </option>
         <option name="myRunnerParameters">
           <MavenRunnerParameters>
             <option name="cmdOptions" />

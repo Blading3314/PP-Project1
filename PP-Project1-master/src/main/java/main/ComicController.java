@@ -3,6 +3,7 @@ package main;
 import Comic.Comic;
 import Comic.ComicDAO;
 import Comic.ComicDAOImpl;
+import I18n.I18nManager;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
@@ -23,6 +24,7 @@ import java.util.Locale;
 import java.util.function.Predicate;
 
 public class ComicController {
+    private final I18nManager i18n = I18nManager.getInstance();
 
     @FXML
     private TextField idField;
@@ -37,9 +39,17 @@ public class ComicController {
     @FXML
     private TextField stockField;
     @FXML
-    private TextField searchField;
+    private TextField searchIdField;
+    @FXML
+    private TextField searchTitleField;
+    @FXML
+    private TextField searchIssueField;
+    @FXML
+    private TextField searchPublisherField;
     @FXML
     private Button searchButton;
+    @FXML
+    private Button showAllButton;
     @FXML
     private Button clearButton;
     @FXML
@@ -110,11 +120,15 @@ public class ComicController {
         });
 
         searchButton.setOnAction(e -> applySearchFilter());
+        showAllButton.setOnAction(e -> showAllComics());
         clearButton.setOnAction(e -> {
-            searchField.clear();
+            clearSearchFields();
             applySearchFilter();
         });
-        searchField.textProperty().addListener((o, a, b) -> applySearchFilter());
+        searchIdField.textProperty().addListener((o, a, b) -> applySearchFilter());
+        searchTitleField.textProperty().addListener((o, a, b) -> applySearchFilter());
+        searchIssueField.textProperty().addListener((o, a, b) -> applySearchFilter());
+        searchPublisherField.textProperty().addListener((o, a, b) -> applySearchFilter());
 
         addButton.setOnAction(e -> onAdd());
         updateButton.setOnAction(e -> onUpdate());
@@ -130,37 +144,49 @@ public class ComicController {
     }
 
     private void reloadFromDatabase() {
+        showAllComics();
+    }
+
+    private void showAllComics() {
         List<Comic> rows = dao.getAllComics();
         allComics = FXCollections.observableArrayList(rows);
         filteredComics = new FilteredList<>(allComics, x -> true);
         comicTable.setItems(filteredComics);
-        applySearchFilter();
         totalComicsLabel.setText(Integer.toString(allComics.size()));
     }
 
     private void applySearchFilter() {
-        String q = searchField.getText() == null ? "" : searchField.getText().trim().toLowerCase(Locale.ROOT);
-        if (q.isEmpty()) {
-            // Clear table when search is empty
+        String id = normalized(searchIdField);
+        String title = normalized(searchTitleField);
+        String issue = normalized(searchIssueField);
+        String publisher = normalized(searchPublisherField);
+        if (id.isEmpty() && title.isEmpty() && issue.isEmpty() && publisher.isEmpty()) {
             allComics.clear();
             filteredComics.setPredicate(comic -> false);
             totalComicsLabel.setText("0");
             return;
         }
-        
-        // Load data from database only when searching
+
         List<Comic> comics = dao.getAllComics();
         allComics = FXCollections.observableArrayList(comics);
         filteredComics = new FilteredList<>(allComics, p -> false);
         comicTable.setItems(filteredComics);
         
         Predicate<Comic> match = c -> {
-            String blob = (c.getName() + " " + c.getIssue() + " " + c.getPublisher() + " " + c.getComicID())
-                    .toLowerCase(Locale.ROOT);
-            return blob.contains(q);
+            return containsIfPresent(Integer.toString(c.getComicID()), id)
+                    && containsIfPresent(safeLower(c.getName()), title)
+                    && containsIfPresent(safeLower(c.getIssue()), issue)
+                    && containsIfPresent(safeLower(c.getPublisher()), publisher);
         };
         filteredComics.setPredicate(match);
         totalComicsLabel.setText(Integer.toString(filteredComics.size()));
+    }
+
+    private void clearSearchFields() {
+        searchIdField.clear();
+        searchTitleField.clear();
+        searchIssueField.clear();
+        searchPublisherField.clear();
     }
 
     private void onAdd() {
@@ -189,7 +215,7 @@ public class ComicController {
     private void onUpdate() {
         int id = parseId(idField.getText());
         if (id <= 0) {
-            showInfo("Select a comic", "Choose a row in the table to update.");
+            showInfo("alert.comic.select.title", "alert.comic.select.update");
             return;
         }
         if (!validateCoreFields()) {
@@ -216,7 +242,7 @@ public class ComicController {
     private void onDelete() {
         int id = parseId(idField.getText());
         if (id <= 0) {
-            showInfo("Select a comic", "Pick a row or enter a valid comic ID to remove.");
+            showInfo("alert.comic.select.title", "alert.comic.select.remove");
             return;
         }
         dao.deleteComicByID(id);
@@ -229,15 +255,15 @@ public class ComicController {
         String iss = issueField.getText() == null ? "" : issueField.getText().trim();
         String pub = publisherField.getText() == null ? "" : publisherField.getText().trim();
         if (t.isEmpty()) {
-            showInfo("Title required", "Every comic needs a title.");
+            showInfo("alert.comic.title.title", "alert.comic.title.required");
             return false;
         }
         if (iss.isEmpty()) {
-            showInfo("Issue required", "Enter an issue label such as #1, Vol 2, or GN.");
+            showInfo("alert.comic.issue.title", "alert.comic.issue.required");
             return false;
         }
         if (pub.isEmpty()) {
-            showInfo("Publisher required", "Who printed this? (e.g. Marvel, Image, Viz.)");
+            showInfo("alert.comic.publisher.title", "alert.comic.publisher.required");
             return false;
         }
         return true;
@@ -246,18 +272,18 @@ public class ComicController {
     private Double parsePrice() {
         String raw = priceField.getText() == null ? "" : priceField.getText().trim().replace(',', '.');
         if (raw.isEmpty()) {
-            showInfo("Price", "Enter a list price (0 is allowed for bundles or promos).");
+            showInfo("alert.comic.price.title", "alert.comic.price.required");
             return null;
         }
         try {
             double p = Double.parseDouble(raw);
             if (p < 0 || p > 99999) {
-                showInfo("Price", "Use a realistic shelf price (0 – 99,999).");
+                showInfo("alert.comic.price.title", "alert.comic.price.range");
                 return null;
             }
             return p;
         } catch (NumberFormatException e) {
-            showInfo("Price", "Use numbers only, e.g. 4.99 or 19");
+            showInfo("alert.comic.price.title", "alert.comic.price.number");
             return null;
         }
     }
@@ -270,12 +296,12 @@ public class ComicController {
         try {
             int n = Integer.parseInt(raw);
             if (n < 0 || n > 1_000_000) {
-                showInfo("Stock", "Stock should be between 0 and 1,000,000.");
+                showInfo("alert.comic.stock.title", "alert.comic.stock.range");
                 return null;
             }
             return n;
         } catch (NumberFormatException e) {
-            showInfo("Stock", "Enter a whole number for copies on hand.");
+            showInfo("alert.comic.stock.title", "alert.comic.stock.number");
             return null;
         }
     }
@@ -291,6 +317,18 @@ public class ComicController {
         }
     }
 
+    private static String normalized(TextField field) {
+        return field.getText() == null ? "" : field.getText().trim().toLowerCase(Locale.ROOT);
+    }
+
+    private static String safeLower(String value) {
+        return value == null ? "" : value.toLowerCase(Locale.ROOT);
+    }
+
+    private static boolean containsIfPresent(String value, String filter) {
+        return filter.isEmpty() || value.contains(filter);
+    }
+
     private void clearForm() {
         idField.clear();
         titleField.clear();
@@ -301,11 +339,12 @@ public class ComicController {
         comicTable.getSelectionModel().clearSelection();
     }
 
-    private static void showInfo(String title, String message) {
+    private void showInfo(String titleKey, String messageKey, Object... args) {
         Alert a = new Alert(Alert.AlertType.INFORMATION);
-        a.setTitle(title);
+        a.setTitle(i18n.getString(titleKey));
         a.setHeaderText(null);
-        a.setContentText(message);
+        a.setContentText(i18n.getString(messageKey, args));
         a.showAndWait();
     }
 }
+
