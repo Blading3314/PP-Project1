@@ -5,26 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="aa8d4e0e-55e7-4e04-a8c7-770a0144b1e1" name="Changes" comment="update some stuff">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/2820d557-72fc-4ab2-a1df-bda01a25b266.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/2820d557-72fc-4ab2-a1df-bda01a25b266.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/java/Employee/EmployeeDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/PP-Project1-master/src/main/java/Employee/EmployeeDAOImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/java/I18n/I18nTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/java/Order/OrderDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/PP-Project1-master/src/main/java/Order/OrderDAOImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/java/main/ComicController.java" beforeDir="false" afterPath="$PROJECT_DIR$/PP-Project1-master/src/main/java/main/ComicController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/java/main/CustomerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/PP-Project1-master/src/main/java/main/CustomerController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/java/main/EmployeeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/PP-Project1-master/src/main/java/main/EmployeeController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/java/main/OrderController.java" beforeDir="false" afterPath="$PROJECT_DIR$/PP-Project1-master/src/main/java/main/OrderController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/resources/comic-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/PP-Project1-master/src/main/resources/comic-view.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/resources/customer-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/PP-Project1-master/src/main/resources/customer-view.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/resources/employee-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/PP-Project1-master/src/main/resources/employee-view.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/resources/i18n/messages.properties" beforeDir="false" afterPath="$PROJECT_DIR$/PP-Project1-master/src/main/resources/i18n/messages.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/resources/i18n/messages_es.properties" beforeDir="false" afterPath="$PROJECT_DIR$/PP-Project1-master/src/main/resources/i18n/messages_es.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/resources/i18n/messages_fr.properties" beforeDir="false" afterPath="$PROJECT_DIR$/PP-Project1-master/src/main/resources/i18n/messages_fr.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/resources/main-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/PP-Project1-master/src/main/resources/main-view.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/resources/order-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/PP-Project1-master/src/main/resources/order-view.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PP-Project1-master/src/main/resources/stage-manager.css" beforeDir="false" afterPath="$PROJECT_DIR$/PP-Project1-master/src/main/resources/stage-manager.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PP-Project1-master/test.db" beforeDir="false" afterPath="$PROJECT_DIR$/PP-Project1-master/test.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PP-Project1-master/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/PP-Project1-master/README.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,17 +36,36 @@
     &quot;assignee&quot;: &quot;Blading3314&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/Blading3314/PP-Project1&quot;,
-    &quot;accountId&quot;: &quot;a801ba89-d9fd-4b50-93df-6ea09a1e7988&quot;
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/Blading3314/PP-Project1.git",
+    "accountId": "8a8da00b-789e-4373-b250-047b399a214e"
   }
-}</component>
+}]]></component>
   <component name="McpProjectServerCommands">
-    <commands />
-    <urls />
+    <McpServerCommand sourceId="UserConfigurationSource">
+      <option name="allowedToolsNames" />
+      <option name="enabled" value="true" />
+      <option name="name" value="" />
+      <option name="programPath" value="" />
+      <option name="arguments" value="" />
+      <option name="workingDirectory" value="" />
+      <envs />
+    </McpServerCommand>
+    <McpServerCommand sourceId="UserConfigurationSource">
+      <option name="allowedToolsNames" />
+      <option name="enabled" value="true" />
+      <option name="name" value="" />
+      <option name="programPath" value="" />
+      <option name="arguments" value="" />
+      <option name="workingDirectory" value="" />
+      <envs />
+    </McpServerCommand>
   </component>
   <component name="PhpWorkspaceProjectConfiguration" interpreter_name="/opt/homebrew/Cellar/php/8.5.5/bin/php" />
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="DEPENDENCY_CHECKER_PROBLEMS_TAB" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 2
 }</component>
@@ -73,34 +74,35 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.I18nTest.executor&quot;: &quot;Run&quot;,
-    &quot;Application.SampleDataSeeder.executor&quot;: &quot;Run&quot;,
-    &quot;Application.SystemLocale.executor&quot;: &quot;Run&quot;,
-    &quot;Maven.Unnamed.executor&quot;: &quot;Run&quot;,
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.MCP Project settings loaded&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
-    &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/thoma/Downloads/PP-Project1&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.I18nTest.executor": "Run",
+    "Application.SampleDataSeeder.executor": "Run",
+    "Application.SystemLocale.executor": "Run",
+    "Maven.Unnamed.executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.MCP Project settings loaded": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
+    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
+    "git-widget-placeholder": "master",
+    "ignore.virus.scanning.warn.message": "true",
+    "junie.onboarding.icon.badge.shown": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/thoma/Downloads/PP-Project1",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "to.speed.mode.migration.done": "true",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecapSpentCounter">
     <option name="endsOfQuotaMs" value="1778598047027" />
     <option name="spentUsd" value="0.00419475" />
@@ -163,8 +165,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-30f59d01ecdd-2fc7cc6b9a17-intellij.indexing.shared.core-IU-253.30387.90" />
-        <option value="bundled-js-predefined-d6986cc7102b-9b0f141eb926-JavaScript-IU-253.30387.90" />
+        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.28238.7" />
       </set>
     </attachedChunks>
   </component>
