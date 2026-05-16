@@ -53,6 +53,10 @@
     -fx-text-fill: #f5f5f7;
 }
 
+.muted-label {
+    -fx-text-fill: #b8b8c2;
+}
+
 .module-header .label {
     -fx-text-fill: #f5f5f7;
 }

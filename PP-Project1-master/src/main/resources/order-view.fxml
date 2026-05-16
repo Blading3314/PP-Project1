@@ -46,8 +46,12 @@
 
                     <Label text="%order.quantity" GridPane.columnIndex="5" GridPane.rowIndex="0" />
                     <TextField fx:id="quantityField" promptText="1" GridPane.columnIndex="5" GridPane.rowIndex="1" />
+
+                    <Label fx:id="customerLookupLabel" styleClass="muted-label" text="%order.customer.lookup.empty" wrapText="true" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                    <Label fx:id="comicLookupLabel" styleClass="muted-label" text="%order.comic.lookup.empty" wrapText="true" GridPane.columnIndex="4" GridPane.rowIndex="2" />
                 </children>
                 <rowConstraints>
+                    <RowConstraints />
                     <RowConstraints />
                     <RowConstraints />
                 </rowConstraints>
