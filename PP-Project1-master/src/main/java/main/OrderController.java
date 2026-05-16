@@ -108,7 +108,6 @@ public class OrderController {
     private final ComicDAO comicDao = new ComicDAOImpl();
     private ObservableList<Order> allOrders;
     private FilteredList<Order> filteredOrders;
-    private boolean updatingFormFromSelection;
 
     @FXML
     /**
@@ -132,7 +131,7 @@ public class OrderController {
         orderIdColumn.setCellValueFactory(cd -> new ReadOnlyStringWrapper(formatFriendlyId("O", cd.getValue().getOrderID())));
         orderDateColumn.setCellValueFactory(cd -> new ReadOnlyStringWrapper(cd.getValue().getOrderDate()));
         customerIdColumn.setCellValueFactory(cd -> new ReadOnlyStringWrapper(formatFriendlyId("C", cd.getValue().getCustomerID())));
-        comicIdColumn.setCellValueFactory(cd -> new ReadOnlyStringWrapper(formatFriendlyId("C", cd.getValue().getComicId())));
+        comicIdColumn.setCellValueFactory(cd -> new ReadOnlyStringWrapper(formatFriendlyId("CB", cd.getValue().getComicId())));
         quantityColumn.setCellValueFactory(cd -> new ReadOnlyObjectWrapper<>(cd.getValue().getQuantity()));
         statusColumn.setCellValueFactory(cd -> {
             return new ReadOnlyStringWrapper(toDisplayStatus(cd.getValue().getStatus()));
@@ -152,9 +151,7 @@ public class OrderController {
                 quantityField.setText(Integer.toString(row.getQuantity()));
                 String st = row.getStatus();
                 if (st != null) {
-                    updatingFormFromSelection = true;
                     statusCombo.getSelectionModel().select(toDisplayStatus(st));
-                    updatingFormFromSelection = false;
                 }
             } else {
                 prepareBlankOrderForm();
@@ -174,12 +171,6 @@ public class OrderController {
         customerIdField.textProperty().addListener((o, a, b) -> runDatabaseAction(this::updateCustomerLookup));
         comicIdField.textProperty().addListener((o, a, b) -> runDatabaseAction(this::updateComicLookup));
         filterStatusCombo.valueProperty().addListener((o, a, b) -> runDatabaseAction(this::applySearchFilter));
-        statusCombo.valueProperty().addListener((o, a, b) -> {
-            if (!updatingFormFromSelection && b != null && filterStatusCombo != null) {
-                filterStatusCombo.getSelectionModel().select(b);
-                runDatabaseAction(this::applySearchFilter);
-            }
-        });
 
         addButton.setOnAction(e -> runDatabaseAction(this::onAdd));
         updateButton.setOnAction(e -> runDatabaseAction(this::onUpdate));

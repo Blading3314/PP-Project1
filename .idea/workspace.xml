@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="aa8d4e0e-55e7-4e04-a8c7-770a0144b1e1" name="Changes" comment="update some stuff" />
+    <list default="true" id="aa8d4e0e-55e7-4e04-a8c7-770a0144b1e1" name="Changes" comment="added comprehensive Javadoc comments to improve code readability and maintainability, refactored order and employee DAOs with enhanced database error handling, introduced new utility methods for customer/comic lookups and order filtering, and added logout button to main view">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PP-Project1-master/test.db" beforeDir="false" afterPath="$PROJECT_DIR$/PP-Project1-master/test.db" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -14,7 +17,7 @@
     <execution />
   </component>
   <component name="EmbeddingIndexingInfo">
-    <option name="cachedIndexableFilesCount" value="46" />
+    <option name="cachedIndexableFilesCount" value="57" />
     <option name="fileBasedEmbeddingIndicesEnabled" value="true" />
   </component>
   <component name="FileTemplateManagerImpl">
@@ -33,12 +36,12 @@
     &quot;assignee&quot;: &quot;Blading3314&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/Blading3314/PP-Project1.git&quot;,
-    &quot;accountId&quot;: &quot;8a8da00b-789e-4373-b250-047b399a214e&quot;
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/Blading3314/PP-Project1",
+    "accountId": "a801ba89-d9fd-4b50-93df-6ea09a1e7988"
   }
-}</component>
+}]]></component>
   <component name="McpProjectServerCommands">
     <commands />
     <urls />
@@ -55,35 +58,36 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.I18nTest.executor&quot;: &quot;Run&quot;,
-    &quot;Application.SampleDataSeeder.executor&quot;: &quot;Run&quot;,
-    &quot;Application.SystemLocale.executor&quot;: &quot;Run&quot;,
-    &quot;Maven.Unnamed.executor&quot;: &quot;Run&quot;,
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.MCP Project settings loaded&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
-    &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/thoma/Downloads/PP-Project1&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.I18nTest.executor": "Run",
+    "Application.SampleDataSeeder.executor": "Run",
+    "Application.SystemLocale.executor": "Run",
+    "Maven.Unnamed.executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.MCP Project settings loaded": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
+    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
+    "git-widget-placeholder": "master",
+    "ignore.virus.scanning.warn.message": "true",
+    "junie.onboarding.icon.badge.shown": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/thoma/Downloads/PP-Project1",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "org.jetbrains.plugins.github.ui.GithubSettingsConfigurable",
+    "to.speed.mode.migration.done": "true",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecapSpentCounter">
     <option name="endsOfQuotaMs" value="1778598047027" />
     <option name="spentUsd" value="0.00419475" />
@@ -159,6 +163,7 @@
       <updated>1777931441027</updated>
       <workItem from="1777931443138" duration="6243000" />
       <workItem from="1778185614555" duration="1502000" />
+      <workItem from="1778965455813" duration="2080000" />
     </task>
     <task id="LOCAL-00001" summary="update some stuff">
       <option name="closed" value="true" />
@@ -176,7 +181,23 @@
       <option name="project" value="LOCAL" />
       <updated>1777931982883</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="added logout functionality, improved internationalization with new translations, enhanced database error handling, and added code documentation">
+      <option name="closed" value="true" />
+      <created>1778954737791</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1778954737791</updated>
+    </task>
+    <task id="LOCAL-00004" summary="added comprehensive Javadoc comments to improve code readability and maintainability, refactored order and employee DAOs with enhanced database error handling, introduced new utility methods for customer/comic lookups and order filtering, and added logout button to main view">
+      <option name="closed" value="true" />
+      <created>1778954762318</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1778954762318</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -189,6 +210,8 @@
     <MESSAGE value="added a login page that prompts user to login as admin or employee to separate the deletion of data logic" />
     <MESSAGE value="added logout button, extended database error handling, improved accessibility with internationalized strings, and added class-level documentation" />
     <MESSAGE value="added login/logout functionality, improved internationalization with new translations, documented code, and added robust database exception handling" />
-    <option name="LAST_COMMIT_MESSAGE" value="added login/logout functionality, improved internationalization with new translations, documented code, and added robust database exception handling" />
+    <MESSAGE value="added logout functionality, improved internationalization with new translations, enhanced database error handling, and added code documentation" />
+    <MESSAGE value="added comprehensive Javadoc comments to improve code readability and maintainability, refactored order and employee DAOs with enhanced database error handling, introduced new utility methods for customer/comic lookups and order filtering, and added logout button to main view" />
+    <option name="LAST_COMMIT_MESSAGE" value="added comprehensive Javadoc comments to improve code readability and maintainability, refactored order and employee DAOs with enhanced database error handling, introduced new utility methods for customer/comic lookups and order filtering, and added logout button to main view" />
   </component>
 </project>
