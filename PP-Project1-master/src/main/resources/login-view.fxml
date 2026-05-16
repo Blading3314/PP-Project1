@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane prefHeight="520.0" prefWidth="720.0" styleClass="screen-root" stylesheets="@stage-manager.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.LoginController">
+    <center>
+        <VBox alignment="CENTER" spacing="16.0">
+            <children>
+                <VBox maxWidth="360.0" spacing="14.0" styleClass="surface">
+                    <padding>
+                        <Insets bottom="24.0" left="24.0" right="24.0" top="24.0" />
+                    </padding>
+                    <children>
+                        <Label text="%login.title">
+                            <font>
+                                <Font name="System Bold" size="24.0" />
+                            </font>
+                        </Label>
+                        <Label styleClass="muted-label" text="%login.description" wrapText="true" />
+                        <ComboBox fx:id="languageSelector" maxWidth="Infinity" promptText="Language" />
+                        <VBox spacing="6.0">
+                            <children>
+                                <Label text="%login.username" />
+                                <TextField fx:id="usernameField" promptText="%login.username.prompt" />
+                            </children>
+                        </VBox>
+                        <VBox spacing="6.0">
+                            <children>
+                                <Label text="%login.password" />
+                                <PasswordField fx:id="passwordField" promptText="%login.password.prompt" />
+                            </children>
+                        </VBox>
+                        <Button fx:id="loginButton" maxWidth="Infinity" styleClass="primary-button" text="%login.button" />
+                        <Label fx:id="demoAccountsLabel" styleClass="muted-label" wrapText="true" />
+                    </children>
+                </VBox>
+            </children>
+        </VBox>
+    </center>
+</BorderPane>
