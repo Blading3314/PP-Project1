@@ -29,6 +29,7 @@
                 <ToggleButton fx:id="ordersToggle" maxWidth="Infinity" mnemonicParsing="false" styleClass="stage-dock-toggle" text="%main.orders" toggleGroup="$moduleGroup" wrapText="true" />
                 <Region VBox.vgrow="ALWAYS" />
                 <ComboBox fx:id="languageSelector" maxWidth="Infinity" promptText="Language" />
+                <Button fx:id="logoutButton" maxWidth="Infinity" styleClass="quiet-button" text="%main.logout" />
             </children>
         </VBox>
     </left>

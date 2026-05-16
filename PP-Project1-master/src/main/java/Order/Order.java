@@ -1,5 +1,9 @@
 package Order;
 
+/**
+ * Simple data object for an order.
+ * Orders connect a customer to a comic and keep the date, status, and quantity together.
+ */
 public class Order {
     private int orderID;
     private String orderDate;
@@ -8,10 +12,16 @@ public class Order {
     private String status;
     private int quantity;
 
+    /**
+     * Creates an order with the default quantity of one.
+     */
     public Order(int orderID, String orderDate, int comicId, int customerID, String status) {
         this(orderID, orderDate, comicId, customerID, status, 1);
     }
 
+    /**
+     * Creates a full order object from form input or a database row.
+     */
     public Order(int orderID, String orderDate, int comicId, int customerID, String status, int quantity) {
         this.orderID = orderID;
         this.orderDate = orderDate;
@@ -25,7 +35,11 @@ public class Order {
         return orderID;
     }
 
-    /** @deprecated use {@link #getOrderID()} */
+    /**
+     * Older name kept so existing code still compiles.
+     *
+     * @deprecated use {@link #getOrderID()}
+     */
     public int getPaidID() {
         return orderID;
     }
@@ -38,7 +52,11 @@ public class Order {
         return orderDate;
     }
 
-    /** @deprecated use {@link #getOrderDate()} */
+    /**
+     * Older name kept so existing code still compiles.
+     *
+     * @deprecated use {@link #getOrderDate()}
+     */
     public String getPaidDate() {
         return orderDate;
     }
@@ -79,6 +97,9 @@ public class Order {
         this.quantity = quantity;
     }
 
+    /**
+     * Produces a readable order summary for debugging.
+     */
     @Override
     public String toString() {
         return "Order #" + orderID

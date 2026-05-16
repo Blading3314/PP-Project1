@@ -4,7 +4,7 @@ import Customer.Customer;
 import Customer.CustomerDAO;
 import Customer.CustomerDAOImpl;
 import I18n.I18nManager;
-import javafx.beans.property.ReadOnlyObjectWrapper;
+import auth.RoleGuard;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -15,11 +15,16 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import util.DatabaseException;
 
 import java.util.List;
 import java.util.Locale;
 import java.util.function.Predicate;
 
+/**
+ * Controller for the customer screen.
+ * It keeps customer form actions, searching, duplicate checks, and database error alerts in one place.
+ */
 public class CustomerController {
     private final I18nManager i18n = I18nManager.getInstance();
 
@@ -48,7 +53,7 @@ public class CustomerController {
     @FXML
     private TableView<Customer> customerTable;
     @FXML
-    private TableColumn<Customer, Integer> idColumn;
+    private TableColumn<Customer, String> idColumn;
     @FXML
     private TableColumn<Customer, String> nameColumn;
     @FXML
@@ -69,9 +74,12 @@ public class CustomerController {
     private FilteredList<Customer> filteredCustomers;
 
     @FXML
+    /**
+     * Connects table columns, search listeners, form buttons, and delete permissions.
+     */
     private void initialize() {
         idField.setEditable(false);
-        idColumn.setCellValueFactory(cd -> new ReadOnlyObjectWrapper<>(cd.getValue().getCustomerID()));
+        idColumn.setCellValueFactory(cd -> new ReadOnlyStringWrapper(formatFriendlyId("C", cd.getValue().getCustomerID())));
         nameColumn.setCellValueFactory(cd -> {
             Customer c = cd.getValue();
             return new ReadOnlyStringWrapper(c.getFirstName() + " " + c.getLastName());
@@ -93,27 +101,34 @@ public class CustomerController {
             }
         });
 
-        searchButton.setOnAction(e -> applySearchFilter());
-        showAllButton.setOnAction(e -> showAllCustomers());
+        searchButton.setOnAction(e -> runDatabaseAction(this::applySearchFilter));
+        showAllButton.setOnAction(e -> runDatabaseAction(this::showAllCustomers));
         clearButton.setOnAction(e -> {
             clearSearchFields();
-            applySearchFilter();
+            runDatabaseAction(this::applySearchFilter);
         });
-        searchIdField.textProperty().addListener((o, a, b) -> applySearchFilter());
-        searchNameField.textProperty().addListener((o, a, b) -> applySearchFilter());
-        searchEmailField.textProperty().addListener((o, a, b) -> applySearchFilter());
-        searchPhoneField.textProperty().addListener((o, a, b) -> applySearchFilter());
+        searchIdField.textProperty().addListener((o, a, b) -> runDatabaseAction(this::applySearchFilter));
+        searchNameField.textProperty().addListener((o, a, b) -> runDatabaseAction(this::applySearchFilter));
+        searchEmailField.textProperty().addListener((o, a, b) -> runDatabaseAction(this::applySearchFilter));
+        searchPhoneField.textProperty().addListener((o, a, b) -> runDatabaseAction(this::applySearchFilter));
 
-        addButton.setOnAction(e -> onAdd());
-        updateButton.setOnAction(e -> onUpdate());
-        deleteButton.setOnAction(e -> onDelete());
-        refreshButton.setOnAction(e -> reloadFromDatabase());
+        addButton.setOnAction(e -> runDatabaseAction(this::onAdd));
+        updateButton.setOnAction(e -> runDatabaseAction(this::onUpdate));
+        deleteButton.setOnAction(e -> runDatabaseAction(this::onDelete));
+        refreshButton.setOnAction(e -> runDatabaseAction(this::reloadFromDatabase));
+        RoleGuard.applyDeletePermission(deleteButton);
     }
 
+    /**
+     * Reloads the full customer list after a save, update, or delete.
+     */
     private void reloadFromDatabase() {
         showAllCustomers();
     }
 
+    /**
+     * Shows every customer in the table.
+     */
     private void showAllCustomers() {
         List<Customer> customers = dao.getAllCustomers();
         allCustomers = FXCollections.observableArrayList(customers);
@@ -121,6 +136,9 @@ public class CustomerController {
         customerTable.setItems(filteredCustomers);
     }
 
+    /**
+     * Applies the current search fields to the customer list.
+     */
     private void applySearchFilter() {
         String id = normalized(searchIdField);
         String name = normalized(searchNameField);
@@ -150,6 +168,9 @@ public class CustomerController {
         filteredCustomers.setPredicate(match);
     }
 
+    /**
+     * Clears only the search fields, not the edit form.
+     */
     private void clearSearchFields() {
         searchIdField.clear();
         searchNameField.clear();
@@ -157,6 +178,9 @@ public class CustomerController {
         searchPhoneField.clear();
     }
 
+    /**
+     * Validates the form and creates a new customer.
+     */
     private void onAdd() {
         Customer c = buildCustomerFromForm(0);
         if (c == null || hasDuplicateContact(c)) {
@@ -167,6 +191,9 @@ public class CustomerController {
         clearForm();
     }
 
+    /**
+     * Validates the form and updates the selected customer.
+     */
     private void onUpdate() {
         int id = parseId(idField.getText());
         if (id <= 0) {
@@ -180,9 +207,18 @@ public class CustomerController {
         reloadFromDatabase();
     }
 
+    /**
+     * Deletes the selected customer after permission and confirmation checks.
+     */
     private void onDelete() {
+        if (!RoleGuard.confirmDeleteAllowed(i18n)) {
+            return;
+        }
         int id = parseId(idField.getText());
         if (id <= 0) {
+            return;
+        }
+        if (!RoleGuard.confirmDelete(i18n, i18n.getString("delete.item.customer"))) {
             return;
         }
         dao.deleteCustomerByID(id);
@@ -190,6 +226,9 @@ public class CustomerController {
         clearForm();
     }
 
+    /**
+     * Safely turns an ID field into a number, using -1 when it is invalid.
+     */
     private static int parseId(String raw) {
         if (raw == null || raw.isBlank()) {
             return -1;
@@ -216,6 +255,9 @@ public class CustomerController {
         return new String[] { t.substring(0, sp).trim(), t.substring(sp + 1).trim() };
     }
 
+    /**
+     * Clears the edit form and removes the table selection.
+     */
     private void clearForm() {
         idField.clear();
         nameField.clear();
@@ -224,18 +266,37 @@ public class CustomerController {
         customerTable.getSelectionModel().clearSelection();
     }
 
+    /**
+     * Reads a text field without returning null.
+     */
     private static String textOrEmpty(TextField field) {
         return field.getText() == null ? "" : field.getText().trim();
     }
 
+    /**
+     * Normalizes search input for case-insensitive matching.
+     */
     private static String normalized(TextField field) {
         return textOrEmpty(field).toLowerCase(Locale.ROOT);
     }
 
+    /**
+     * Treats blank filters as matches and nonblank filters as contains checks.
+     */
     private static boolean containsIfPresent(String value, String filter) {
         return filter.isEmpty() || (value != null && value.contains(filter));
     }
 
+    /**
+     * Formats database IDs for display, such as C1.
+     */
+    private static String formatFriendlyId(String prefix, int id) {
+        return prefix + id;
+    }
+
+    /**
+     * Builds a Customer object from the form after validating required fields.
+     */
     private Customer buildCustomerFromForm(int id) {
         String rawName = nameField.getText() == null ? "" : nameField.getText().trim();
         String email = emailField.getText() == null ? "" : emailField.getText().trim();
@@ -262,6 +323,9 @@ public class CustomerController {
         return new Customer(id, names[0], names[1], phone, email);
     }
 
+    /**
+     * Checks email and phone uniqueness before saving a customer.
+     */
     private boolean hasDuplicateContact(Customer customer) {
         String email = normalizeEmail(customer.getEmail());
         String phone = normalizePhone(customer.getPhoneNumber());
@@ -282,19 +346,50 @@ public class CustomerController {
         return false;
     }
 
+    /**
+     * Normalizes emails so duplicate checks are consistent.
+     */
     private static String normalizeEmail(String value) {
         return value == null ? "" : value.trim().toLowerCase(Locale.ROOT);
     }
 
+    /**
+     * Removes formatting characters from phone numbers before comparing.
+     */
     private static String normalizePhone(String value) {
         return value == null ? "" : value.replaceAll("\\D+", "");
     }
 
+    /**
+     * Shows a translated informational alert.
+     */
     private void showInfo(String titleKey, String messageKey, Object... args) {
         Alert a = new Alert(Alert.AlertType.INFORMATION);
         a.setTitle(i18n.getString(titleKey));
         a.setHeaderText(null);
         a.setContentText(i18n.getString(messageKey, args));
+        a.showAndWait();
+    }
+
+    /**
+     * Runs a database action and turns database exceptions into UI alerts.
+     */
+    private void runDatabaseAction(Runnable action) {
+        try {
+            action.run();
+        } catch (DatabaseException e) {
+            showDatabaseError(e);
+        }
+    }
+
+    /**
+     * Shows a translated database error alert.
+     */
+    private void showDatabaseError(DatabaseException e) {
+        Alert a = new Alert(Alert.AlertType.ERROR);
+        a.setTitle(i18n.getString("alert.database.title"));
+        a.setHeaderText(null);
+        a.setContentText(i18n.getString(e.getMessageKey(), e.getOperation()));
         a.showAndWait();
     }
 }

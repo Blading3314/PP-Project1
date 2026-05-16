@@ -1,11 +1,19 @@
 package Customer;
 
+/**
+ * Simple data object for a customer.
+ * It mirrors the Customer table and is used by the table views and DAO layer.
+ */
 public class Customer {
     private int customerID;
     private String firstName;
     private String lastName;
     private String phoneNumber;
     private String email;
+
+    /**
+     * Creates a customer object from form input or a database row.
+     */
     public Customer(int customerID, String firstName, String lastName, String phoneNumber, String email) {
         this.customerID = customerID;
         this.firstName = firstName;
@@ -53,6 +61,9 @@ public class Customer {
     public void setEmail(String email) {
         this.email = email;
     }
+    /**
+     * Produces a readable customer summary for debugging.
+     */
     @Override
     public String toString(){
         return "Customer.Customer ID: " + customerID +

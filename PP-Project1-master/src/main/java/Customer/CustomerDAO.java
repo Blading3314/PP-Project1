@@ -3,6 +3,10 @@ package Customer;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Database contract for customer records.
+ * Keeping this as an interface makes the controller code easier to read and test.
+ */
 public interface CustomerDAO {
     Optional<Customer> getCustomerById(int customerID);
     List<Customer> getAllCustomers();

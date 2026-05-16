@@ -1,6 +1,7 @@
 package Order;
 
 import util.DBConnectionUtility;
+import util.DatabaseException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,6 +13,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * SQLite implementation of order storage.
+ * It also contains small migration helpers for older copies of the project database.
+ */
 public class OrderDAOImpl implements OrderDAO {
 
     private static final String ORDER_TABLE = "\"Order\"";
@@ -21,6 +26,9 @@ public class OrderDAOImpl implements OrderDAO {
         ensureCompletedStatusAllowed();
     }
 
+    /**
+     * Adds the quantity column for older database copies.
+     */
     private static void ensureQuantityColumn() {
         try (Connection conn = DBConnectionUtility.getConnection();
              Statement st = conn.createStatement()) {
@@ -30,10 +38,13 @@ public class OrderDAOImpl implements OrderDAO {
                 // duplicate column, missing Order table, etc.
             }
         } catch (SQLException e) {
-            // no database file yet
+            throw new DatabaseException("prepare order table", e);
         }
     }
 
+    /**
+     * Rebuilds the order table when an older CHECK constraint does not allow COMPLETED.
+     */
     private static void ensureCompletedStatusAllowed() {
         String schemaSql = "SELECT sql FROM sqlite_master WHERE type = 'table' AND name = 'Order'";
         try (Connection conn = DBConnectionUtility.getConnection();
@@ -66,10 +77,13 @@ public class OrderDAOImpl implements OrderDAO {
             st.execute("ALTER TABLE \"Order_new\" RENAME TO \"Order\"");
             st.execute("PRAGMA foreign_keys = ON");
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            throw new DatabaseException("prepare order statuses", e);
         }
     }
 
+    /**
+     * Checks whether a result set includes a column before reading migration-era fields.
+     */
     private static boolean hasColumn(ResultSet rs, String label) throws SQLException {
         ResultSetMetaData md = rs.getMetaData();
         for (int i = 1; i <= md.getColumnCount(); i++) {
@@ -80,6 +94,9 @@ public class OrderDAOImpl implements OrderDAO {
         return false;
     }
 
+    /**
+     * Converts one database row into an Order object.
+     */
     private Order extractOrder(ResultSet rs) throws SQLException {
         int id = rs.getInt("orderID");
         String date = rs.getString("orderDate");
@@ -91,6 +108,9 @@ public class OrderDAOImpl implements OrderDAO {
     }
 
     @Override
+    /**
+     * Finds a single order by primary key.
+     */
     public Optional<Order> getPaidById(int orderID) {
         String sql = "SELECT * FROM " + ORDER_TABLE + " WHERE orderID = ?";
         try (Connection conn = DBConnectionUtility.getConnection();
@@ -101,12 +121,15 @@ public class OrderDAOImpl implements OrderDAO {
                 return Optional.of(extractOrder(rs));
             }
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            throw new DatabaseException("load order", e);
         }
         return Optional.empty();
     }
 
     @Override
+    /**
+     * Loads all orders for the order table and filters.
+     */
     public List<Order> getAllPaid() {
         List<Order> orders = new ArrayList<>();
         String sql = "SELECT * FROM " + ORDER_TABLE;
@@ -117,12 +140,15 @@ public class OrderDAOImpl implements OrderDAO {
                 orders.add(extractOrder(rs));
             }
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            throw new DatabaseException("load orders", e);
         }
         return orders;
     }
 
     @Override
+    /**
+     * Finds one order by exact order date.
+     */
     public Optional<Order> getPaidByPaidDate(String paidDate) {
         String sql = "SELECT * FROM " + ORDER_TABLE + " WHERE orderDate = ?";
         try (Connection conn = DBConnectionUtility.getConnection();
@@ -133,12 +159,15 @@ public class OrderDAOImpl implements OrderDAO {
                 return Optional.of(extractOrder(rs));
             }
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            throw new DatabaseException("search orders", e);
         }
         return Optional.empty();
     }
 
     @Override
+    /**
+     * Inserts a new order row.
+     */
     public void savePaid(Order order) {
         String sql = "INSERT INTO " + ORDER_TABLE + " (orderDate, comicID, customerID, Status, quantity) VALUES (?, ?, ?, ?, ?)";
         try (Connection conn = DBConnectionUtility.getConnection();
@@ -148,25 +177,35 @@ public class OrderDAOImpl implements OrderDAO {
             ps.setInt(3, order.getCustomerID());
             ps.setString(4, order.getStatus());
             ps.setInt(5, Math.max(1, order.getQuantity()));
-            ps.executeUpdate();
+            if (ps.executeUpdate() == 0) {
+                throw new DatabaseException("save order", DatabaseException.Kind.NO_CHANGE);
+            }
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            throw new DatabaseException("save order", e);
         }
     }
 
     @Override
+    /**
+     * Deletes an order and reports if no matching row was removed.
+     */
     public void deletePaidByID(int orderID) {
         String sql = "DELETE FROM " + ORDER_TABLE + " WHERE orderID = ?";
         try (Connection conn = DBConnectionUtility.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+            PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, orderID);
-            ps.executeUpdate();
+            if (ps.executeUpdate() == 0) {
+                throw new DatabaseException("delete order", DatabaseException.Kind.NO_CHANGE);
+            }
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            throw new DatabaseException("delete order", e);
         }
     }
 
     @Override
+    /**
+     * Updates an existing order row with the current form values.
+     */
     public void updatePaid(Order order) {
         String sql = "UPDATE " + ORDER_TABLE + " SET orderDate = ?, comicID = ?, customerID = ?, Status = ?, quantity = ? WHERE orderID = ?";
         try (Connection conn = DBConnectionUtility.getConnection();
@@ -177,9 +216,11 @@ public class OrderDAOImpl implements OrderDAO {
             ps.setString(4, order.getStatus());
             ps.setInt(5, Math.max(1, order.getQuantity()));
             ps.setInt(6, order.getOrderID());
-            ps.executeUpdate();
+            if (ps.executeUpdate() == 0) {
+                throw new DatabaseException("update order", DatabaseException.Kind.NO_CHANGE);
+            }
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            throw new DatabaseException("update order", e);
         }
     }
 }

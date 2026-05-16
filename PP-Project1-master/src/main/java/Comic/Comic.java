@@ -1,5 +1,9 @@
 package Comic;
 
+/**
+ * Simple data object for one comic in the store inventory.
+ * The database ID stays numeric, while the UI may display it as a friendly ID like CB1.
+ */
 public class Comic {
     private int comicID;
     private String name;
@@ -8,10 +12,16 @@ public class Comic {
     private double price;
     private int stock;
 
+    /**
+     * Creates a comic without explicit price/stock, using default values.
+     */
     public Comic(int comicID, String name, String issue, String publisher) {
         this(comicID, name, issue, publisher, 0.0, 0);
     }
 
+    /**
+     * Creates a full comic object from form input or a database row.
+     */
     public Comic(int comicID, String name, String issue, String publisher, double price, int stock) {
         this.comicID = comicID;
         this.name = name;
@@ -69,6 +79,9 @@ public class Comic {
         this.stock = stock;
     }
 
+    /**
+     * Produces a readable comic summary for debugging.
+     */
     @Override
     public String toString() {
         return "Comic ID: " + comicID

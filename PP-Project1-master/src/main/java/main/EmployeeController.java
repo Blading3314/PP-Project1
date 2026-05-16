@@ -4,7 +4,7 @@ import Employee.Employee;
 import Employee.EmployeeDAO;
 import Employee.EmployeeDAOImpl;
 import I18n.I18nManager;
-import javafx.beans.property.ReadOnlyObjectWrapper;
+import auth.RoleGuard;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -15,11 +15,16 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import util.DatabaseException;
 
 import java.util.List;
 import java.util.Locale;
 import java.util.function.Predicate;
 
+/**
+ * Controller for the employee screen.
+ * It manages employee searches and form actions while respecting the current user's delete permission.
+ */
 public class EmployeeController {
     private final I18nManager i18n = I18nManager.getInstance();
 
@@ -44,7 +49,7 @@ public class EmployeeController {
     @FXML
     private TableView<Employee> employeeTable;
     @FXML
-    private TableColumn<Employee, Integer> idColumn;
+    private TableColumn<Employee, String> idColumn;
     @FXML
     private TableColumn<Employee, String> fnameColumn;
     @FXML
@@ -63,8 +68,11 @@ public class EmployeeController {
     private FilteredList<Employee> filteredEmployees;
 
     @FXML
+    /**
+     * Connects table columns, search listeners, form buttons, and delete permissions.
+     */
     private void initialize() {
-        idColumn.setCellValueFactory(cd -> new ReadOnlyObjectWrapper<>(cd.getValue().getEmployeeID()));
+        idColumn.setCellValueFactory(cd -> new ReadOnlyStringWrapper(formatFriendlyId("E", cd.getValue().getEmployeeID())));
         fnameColumn.setCellValueFactory(cd -> new ReadOnlyStringWrapper(cd.getValue().getFirstName()));
         lnameColumn.setCellValueFactory(cd -> new ReadOnlyStringWrapper(cd.getValue().getLastName()));
 
@@ -81,26 +89,33 @@ public class EmployeeController {
             }
         });
 
-        searchButton.setOnAction(e -> applySearchFilter());
-        showAllButton.setOnAction(e -> showAllEmployees());
+        searchButton.setOnAction(e -> runDatabaseAction(this::applySearchFilter));
+        showAllButton.setOnAction(e -> runDatabaseAction(this::showAllEmployees));
         clearButton.setOnAction(e -> {
             clearSearchFields();
-            applySearchFilter();
+            runDatabaseAction(this::applySearchFilter);
         });
-        searchIdField.textProperty().addListener((o, a, b) -> applySearchFilter());
-        searchFirstNameField.textProperty().addListener((o, a, b) -> applySearchFilter());
-        searchLastNameField.textProperty().addListener((o, a, b) -> applySearchFilter());
+        searchIdField.textProperty().addListener((o, a, b) -> runDatabaseAction(this::applySearchFilter));
+        searchFirstNameField.textProperty().addListener((o, a, b) -> runDatabaseAction(this::applySearchFilter));
+        searchLastNameField.textProperty().addListener((o, a, b) -> runDatabaseAction(this::applySearchFilter));
 
-        addButton.setOnAction(e -> onAdd());
-        updateButton.setOnAction(e -> onUpdate());
-        deleteButton.setOnAction(e -> onDelete());
-        refreshButton.setOnAction(e -> reloadFromDatabase());
+        addButton.setOnAction(e -> runDatabaseAction(this::onAdd));
+        updateButton.setOnAction(e -> runDatabaseAction(this::onUpdate));
+        deleteButton.setOnAction(e -> runDatabaseAction(this::onDelete));
+        refreshButton.setOnAction(e -> runDatabaseAction(this::reloadFromDatabase));
+        RoleGuard.applyDeletePermission(deleteButton);
     }
 
+    /**
+     * Reloads employees after a write operation.
+     */
     private void reloadFromDatabase() {
         showAllEmployees();
     }
 
+    /**
+     * Shows every employee in the table.
+     */
     private void showAllEmployees() {
         List<Employee> rows = dao.getAllEmployees();
         allEmployees = FXCollections.observableArrayList(rows);
@@ -108,6 +123,9 @@ public class EmployeeController {
         employeeTable.setItems(filteredEmployees);
     }
 
+    /**
+     * Applies the current employee search fields.
+     */
     private void applySearchFilter() {
         String id = normalized(searchIdField);
         String firstName = normalized(searchFirstNameField);
@@ -131,12 +149,18 @@ public class EmployeeController {
         filteredEmployees.setPredicate(match);
     }
 
+    /**
+     * Clears the employee search fields.
+     */
     private void clearSearchFields() {
         searchIdField.clear();
         searchFirstNameField.clear();
         searchLastNameField.clear();
     }
 
+    /**
+     * Validates the form and adds a new employee.
+     */
     private void onAdd() {
         if (!validateNameFields()) {
             return;
@@ -151,6 +175,9 @@ public class EmployeeController {
         clearForm();
     }
 
+    /**
+     * Validates the form and updates the selected employee.
+     */
     private void onUpdate() {
         int id = parseId(idField.getText());
         if (id <= 0) {
@@ -169,10 +196,19 @@ public class EmployeeController {
         reloadFromDatabase();
     }
 
+    /**
+     * Deletes the selected employee after permission and confirmation checks.
+     */
     private void onDelete() {
+        if (!RoleGuard.confirmDeleteAllowed(i18n)) {
+            return;
+        }
         int id = parseId(idField.getText());
         if (id <= 0) {
             showInfo("alert.employee.select.title", "alert.employee.select.remove");
+            return;
+        }
+        if (!RoleGuard.confirmDelete(i18n, i18n.getString("delete.item.employee"))) {
             return;
         }
         dao.deleteEmployeeByID(id);
@@ -180,6 +216,9 @@ public class EmployeeController {
         clearForm();
     }
 
+    /**
+     * Makes sure first and last name are present before saving.
+     */
     private boolean validateNameFields() {
         String fn = firstNameField.getText() == null ? "" : firstNameField.getText().trim();
         String ln = lastNameField.getText() == null ? "" : lastNameField.getText().trim();
@@ -190,6 +229,9 @@ public class EmployeeController {
         return true;
     }
 
+    /**
+     * Safely parses numeric IDs from text fields.
+     */
     private static int parseId(String raw) {
         if (raw == null || raw.isBlank()) {
             return -1;
@@ -201,6 +243,9 @@ public class EmployeeController {
         }
     }
 
+    /**
+     * Clears the employee edit form and current table selection.
+     */
     private void clearForm() {
         idField.clear();
         firstNameField.clear();
@@ -208,23 +253,64 @@ public class EmployeeController {
         employeeTable.getSelectionModel().clearSelection();
     }
 
+    /**
+     * Normalizes search input for case-insensitive matching.
+     */
     private static String normalized(TextField field) {
         return field.getText() == null ? "" : field.getText().trim().toLowerCase(Locale.ROOT);
     }
 
+    /**
+     * Lowercases safely even when a database value is null.
+     */
     private static String safeLower(String value) {
         return value == null ? "" : value.toLowerCase(Locale.ROOT);
     }
 
+    /**
+     * Treats blank filters as matches and nonblank filters as contains checks.
+     */
     private static boolean containsIfPresent(String value, String filter) {
         return filter.isEmpty() || value.contains(filter);
     }
 
+    /**
+     * Formats database IDs for display, such as E1.
+     */
+    private static String formatFriendlyId(String prefix, int id) {
+        return prefix + id;
+    }
+
+    /**
+     * Shows a translated informational alert.
+     */
     private void showInfo(String titleKey, String messageKey, Object... args) {
         Alert a = new Alert(Alert.AlertType.INFORMATION);
         a.setTitle(i18n.getString(titleKey));
         a.setHeaderText(null);
         a.setContentText(i18n.getString(messageKey, args));
+        a.showAndWait();
+    }
+
+    /**
+     * Runs a database action and turns database exceptions into UI alerts.
+     */
+    private void runDatabaseAction(Runnable action) {
+        try {
+            action.run();
+        } catch (DatabaseException e) {
+            showDatabaseError(e);
+        }
+    }
+
+    /**
+     * Shows a translated database error alert.
+     */
+    private void showDatabaseError(DatabaseException e) {
+        Alert a = new Alert(Alert.AlertType.ERROR);
+        a.setTitle(i18n.getString("alert.database.title"));
+        a.setHeaderText(null);
+        a.setContentText(i18n.getString(e.getMessageKey(), e.getOperation()));
         a.showAndWait();
     }
 }

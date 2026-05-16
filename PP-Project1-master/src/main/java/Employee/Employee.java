@@ -1,5 +1,9 @@
 package Employee;
 
+/**
+ * Simple data object for an employee.
+ * Employees can also be linked to login accounts through the auth package.
+ */
 public class Employee {
     private int employeeID;
     private String firstName;
@@ -7,6 +11,9 @@ public class Employee {
     private String phoneNumber;
     private String email;
 
+    /**
+     * Creates an employee object from form input or a database row.
+     */
     public Employee(int employeeID, String firstName, String lastName, String phoneNumber, String email) {
         this.employeeID = employeeID;
         this.firstName = firstName;
@@ -39,6 +46,9 @@ public class Employee {
         this.lastName = lastName;
     }
 
+    /**
+     * Combines first and last name for display-friendly text.
+     */
     public String getFullName() {
         return (firstName == null ? "" : firstName) + " " + (lastName == null ? "" : lastName);
     }
@@ -59,6 +69,9 @@ public class Employee {
         this.email = email;
     }
 
+    /**
+     * Produces a readable employee summary for debugging.
+     */
     @Override
     public String toString() {
         return "Employee ID: " + employeeID

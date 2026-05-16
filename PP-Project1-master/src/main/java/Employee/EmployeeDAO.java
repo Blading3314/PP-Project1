@@ -3,6 +3,10 @@ package Employee;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Database contract for employee records.
+ * The controller uses this instead of writing SQL directly.
+ */
 public interface EmployeeDAO {
     Optional<Employee> getEmployeeById(int employeeID);
 

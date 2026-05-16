@@ -1,8 +1,11 @@
 package main;
 
 import I18n.I18nManager;
+import auth.RoleGuard;
+import Comic.Comic;
 import Comic.ComicDAO;
 import Comic.ComicDAOImpl;
+import Customer.Customer;
 import Customer.CustomerDAO;
 import Customer.CustomerDAOImpl;
 import Order.Order;
@@ -16,12 +19,12 @@ import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import util.DatabaseException;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -29,9 +32,12 @@ import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Optional;
 import java.util.function.Predicate;
 
+/**
+ * Controller for the order screen.
+ * It validates order data, shows live customer/comic ID lookups, and manages order table filtering.
+ */
 public class OrderController {
 
     private I18nManager i18n = I18nManager.getInstance();
@@ -53,6 +59,10 @@ public class OrderController {
     @FXML
     private TextField quantityField;
     @FXML
+    private Label customerLookupLabel;
+    @FXML
+    private Label comicLookupLabel;
+    @FXML
     private TextField searchOrderIdField;
     @FXML
     private TextField searchDateField;
@@ -71,13 +81,13 @@ public class OrderController {
     @FXML
     private TableView<Order> orderTable;
     @FXML
-    private TableColumn<Order, Integer> orderIdColumn;
+    private TableColumn<Order, String> orderIdColumn;
     @FXML
     private TableColumn<Order, String> orderDateColumn;
     @FXML
-    private TableColumn<Order, Integer> customerIdColumn;
+    private TableColumn<Order, String> customerIdColumn;
     @FXML
-    private TableColumn<Order, Integer> comicIdColumn;
+    private TableColumn<Order, String> comicIdColumn;
     @FXML
     private TableColumn<Order, Integer> quantityColumn;
     @FXML
@@ -101,6 +111,9 @@ public class OrderController {
     private boolean updatingFormFromSelection;
 
     @FXML
+    /**
+     * Connects order fields, table columns, lookup helpers, search filters, and buttons.
+     */
     private void initialize() {
         List<String> statusOptions = new ArrayList<>();
         statusOptions.add(i18n.getString("status.pending"));
@@ -116,10 +129,10 @@ public class OrderController {
         ));
         filterStatusCombo.getSelectionModel().selectFirst();
 
-        orderIdColumn.setCellValueFactory(cd -> new ReadOnlyObjectWrapper<>(cd.getValue().getOrderID()));
+        orderIdColumn.setCellValueFactory(cd -> new ReadOnlyStringWrapper(formatFriendlyId("O", cd.getValue().getOrderID())));
         orderDateColumn.setCellValueFactory(cd -> new ReadOnlyStringWrapper(cd.getValue().getOrderDate()));
-        customerIdColumn.setCellValueFactory(cd -> new ReadOnlyObjectWrapper<>(cd.getValue().getCustomerID()));
-        comicIdColumn.setCellValueFactory(cd -> new ReadOnlyObjectWrapper<>(cd.getValue().getComicId()));
+        customerIdColumn.setCellValueFactory(cd -> new ReadOnlyStringWrapper(formatFriendlyId("C", cd.getValue().getCustomerID())));
+        comicIdColumn.setCellValueFactory(cd -> new ReadOnlyStringWrapper(formatFriendlyId("C", cd.getValue().getComicId())));
         quantityColumn.setCellValueFactory(cd -> new ReadOnlyObjectWrapper<>(cd.getValue().getQuantity()));
         statusColumn.setCellValueFactory(cd -> {
             return new ReadOnlyStringWrapper(toDisplayStatus(cd.getValue().getStatus()));
@@ -148,32 +161,40 @@ public class OrderController {
             }
         });
 
-        searchButton.setOnAction(e -> applySearchFilter());
-        showAllButton.setOnAction(e -> showAllOrders());
+        searchButton.setOnAction(e -> runDatabaseAction(this::applySearchFilter));
+        showAllButton.setOnAction(e -> runDatabaseAction(this::showAllOrders));
         clearButton.setOnAction(e -> {
             clearSearchFields();
-            applySearchFilter();
+            runDatabaseAction(this::applySearchFilter);
         });
-        searchOrderIdField.textProperty().addListener((o, a, b) -> applySearchFilter());
-        searchDateField.textProperty().addListener((o, a, b) -> applySearchFilter());
-        searchCustomerIdField.textProperty().addListener((o, a, b) -> applySearchFilter());
-        searchComicIdField.textProperty().addListener((o, a, b) -> applySearchFilter());
-        filterStatusCombo.valueProperty().addListener((o, a, b) -> applySearchFilter());
+        searchOrderIdField.textProperty().addListener((o, a, b) -> runDatabaseAction(this::applySearchFilter));
+        searchDateField.textProperty().addListener((o, a, b) -> runDatabaseAction(this::applySearchFilter));
+        searchCustomerIdField.textProperty().addListener((o, a, b) -> runDatabaseAction(this::applySearchFilter));
+        searchComicIdField.textProperty().addListener((o, a, b) -> runDatabaseAction(this::applySearchFilter));
+        customerIdField.textProperty().addListener((o, a, b) -> runDatabaseAction(this::updateCustomerLookup));
+        comicIdField.textProperty().addListener((o, a, b) -> runDatabaseAction(this::updateComicLookup));
+        filterStatusCombo.valueProperty().addListener((o, a, b) -> runDatabaseAction(this::applySearchFilter));
         statusCombo.valueProperty().addListener((o, a, b) -> {
             if (!updatingFormFromSelection && b != null && filterStatusCombo != null) {
                 filterStatusCombo.getSelectionModel().select(b);
-                applySearchFilter();
+                runDatabaseAction(this::applySearchFilter);
             }
         });
 
-        addButton.setOnAction(e -> onAdd());
-        updateButton.setOnAction(e -> onUpdate());
-        deleteButton.setOnAction(e -> onDelete());
-        refreshButton.setOnAction(e -> reloadFromDatabase());
+        addButton.setOnAction(e -> runDatabaseAction(this::onAdd));
+        updateButton.setOnAction(e -> runDatabaseAction(this::onUpdate));
+        deleteButton.setOnAction(e -> runDatabaseAction(this::onDelete));
+        refreshButton.setOnAction(e -> runDatabaseAction(this::reloadFromDatabase));
+        RoleGuard.applyDeletePermission(deleteButton);
 
         prepareBlankOrderForm();
+        updateCustomerLookup();
+        updateComicLookup();
     }
 
+    /**
+     * Resets the order form to a new-order state.
+     */
     private void prepareBlankOrderForm() {
         orderIdField.clear();
         orderDateField.setText(LocalDate.now().format(ISO));
@@ -183,10 +204,72 @@ public class OrderController {
         quantityField.setText("1");
     }
 
+    /**
+     * Shows who the entered customer ID belongs to.
+     */
+    private void updateCustomerLookup() {
+        int customerId = parseId(customerIdField.getText());
+        if (customerId <= 0) {
+            customerLookupLabel.setText(i18n.getString("order.customer.lookup.empty"));
+            return;
+        }
+
+        customerDao.getCustomerById(customerId)
+                .map(this::formatCustomerLookup)
+                .ifPresentOrElse(
+                        customerLookupLabel::setText,
+                        () -> customerLookupLabel.setText(i18n.getString("order.customer.lookup.missing", customerId)));
+    }
+
+    /**
+     * Shows which comic the entered comic ID belongs to.
+     */
+    private void updateComicLookup() {
+        int comicId = parseId(comicIdField.getText());
+        if (comicId <= 0) {
+            comicLookupLabel.setText(i18n.getString("order.comic.lookup.empty"));
+            return;
+        }
+
+        comicDao.getComicById(comicId)
+                .map(this::formatComicLookup)
+                .ifPresentOrElse(
+                        comicLookupLabel::setText,
+                        () -> comicLookupLabel.setText(i18n.getString("order.comic.lookup.missing", comicId)));
+    }
+
+    /**
+     * Formats the customer lookup helper text.
+     */
+    private String formatCustomerLookup(Customer customer) {
+        String name = (customer.getFirstName() + " " + customer.getLastName()).trim();
+        return i18n.getString("order.customer.lookup.found", customer.getCustomerID(), name);
+    }
+
+    /**
+     * Formats the comic lookup helper text.
+     */
+    private String formatComicLookup(Comic comic) {
+        return i18n.getString("order.comic.lookup.found", comic.getComicID(), comic.getName(), comic.getIssue());
+    }
+
+    /**
+     * Formats database IDs for display, such as O1 or C1.
+     */
+    private static String formatFriendlyId(String prefix, int id) {
+        return prefix + id;
+    }
+
+    /**
+     * Reloads orders after a write operation.
+     */
     private void reloadFromDatabase() {
         showAllOrders();
     }
 
+    /**
+     * Shows every order in the table.
+     */
     private void showAllOrders() {
         clearSearchFields();
         List<Order> rows = orderDao.getAllPaid();
@@ -196,6 +279,9 @@ public class OrderController {
         totalOrdersLabel.setText(Integer.toString(allOrders.size()));
     }
 
+    /**
+     * Applies the current order search fields and status filter.
+     */
     private void applySearchFilter() {
         String id = normalized(searchOrderIdField);
         String date = normalized(searchDateField);
@@ -231,6 +317,9 @@ public class OrderController {
         totalOrdersLabel.setText(Integer.toString(filteredOrders.size()));
     }
 
+    /**
+     * Clears the order search fields and resets the status filter.
+     */
     private void clearSearchFields() {
         searchOrderIdField.clear();
         searchDateField.clear();
@@ -239,6 +328,9 @@ public class OrderController {
         filterStatusCombo.getSelectionModel().selectFirst();
     }
 
+    /**
+     * Validates the form and creates a new order.
+     */
     private void onAdd() {
         ParsedOrderForm p = parseAndValidateForm();
         if (p == null) {
@@ -251,6 +343,9 @@ public class OrderController {
         orderTable.getSelectionModel().clearSelection();
     }
 
+    /**
+     * Validates the form and updates the selected order.
+     */
     private void onUpdate() {
         int id = parseId(orderIdField.getText());
         if (id <= 0) {
@@ -266,49 +361,36 @@ public class OrderController {
         reloadFromDatabase();
     }
 
+    /**
+     * Deletes the selected order after permission and confirmation checks.
+     */
     private void onDelete() {
+        if (!RoleGuard.confirmDeleteAllowed(i18n)) {
+            return;
+        }
         int id = parseId(orderIdField.getText());
         if (id <= 0) {
             showInfo("alert.order.select.title", "alert.order.select.resolve");
             return;
         }
 
-        Optional<Order> existingOrder = orderDao.getPaidById(id);
-        if (existingOrder.isEmpty()) {
+        if (orderDao.getPaidById(id).isEmpty()) {
             showInfo("alert.order.select.title", "alert.order.not.found");
             return;
         }
 
-        ButtonType completedButton = new ButtonType(i18n.getString("status.completed"));
-        ButtonType cancelledButton = new ButtonType(i18n.getString("status.cancelled"));
-        ButtonType keepButton = new ButtonType(i18n.getString("common.cancel"));
-
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle(i18n.getString("alert.order.resolve.title"));
-        alert.setHeaderText(null);
-        alert.setContentText(i18n.getString("alert.order.resolve.message"));
-        alert.getButtonTypes().setAll(completedButton, cancelledButton, keepButton);
-
-        Optional<ButtonType> choice = alert.showAndWait();
-        if (choice.isEmpty() || choice.get() == keepButton) {
+        if (!RoleGuard.confirmDelete(i18n, i18n.getString("delete.item.order"))) {
             return;
         }
-
-        Order current = existingOrder.get();
-        String nextStatus = choice.get() == completedButton ? STATUS_COMPLETED : STATUS_CANCELLED;
-        Order resolvedOrder = new Order(
-                current.getOrderID(),
-                current.getOrderDate(),
-                current.getComicId(),
-                current.getCustomerID(),
-                nextStatus,
-                current.getQuantity());
-        orderDao.updatePaid(resolvedOrder);
+        orderDao.deletePaidByID(id);
         reloadFromDatabase();
         prepareBlankOrderForm();
         orderTable.getSelectionModel().clearSelection();
     }
 
+    /**
+     * Parses the order form and returns a clean value object when everything is valid.
+     */
     private ParsedOrderForm parseAndValidateForm() {
         String dateStr = orderDateField.getText() == null ? "" : orderDateField.getText().trim();
         if (dateStr.isEmpty()) {
@@ -368,6 +450,9 @@ public class OrderController {
         return new ParsedOrderForm(date.format(ISO), custId, comicId, status, qty);
     }
 
+    /**
+     * Converts database status values into translated labels for the UI.
+     */
     private String toDisplayStatus(String status) {
         if (status == null) {
             return "";
@@ -380,6 +465,9 @@ public class OrderController {
         };
     }
 
+    /**
+     * Converts translated status labels back to database values.
+     */
     private String toDatabaseStatus(String displayStatus) {
         if (displayStatus.equals(i18n.getString("status.pending"))) {
             return STATUS_PENDING;
@@ -393,9 +481,15 @@ public class OrderController {
         return displayStatus;
     }
 
+    /**
+     * Clean, validated order form values ready to be saved.
+     */
     private record ParsedOrderForm(String date, int customerId, int comicId, String status, int quantity) {
     }
 
+    /**
+     * Safely parses numeric IDs from text fields.
+     */
     private static int parseId(String raw) {
         if (raw == null || raw.isBlank()) {
             return -1;
@@ -407,23 +501,57 @@ public class OrderController {
         }
     }
 
+    /**
+     * Normalizes search input for case-insensitive matching.
+     */
     private static String normalized(TextField field) {
         return field.getText() == null ? "" : field.getText().trim().toLowerCase(Locale.ROOT);
     }
 
+    /**
+     * Lowercases safely even when a database value is null.
+     */
     private static String safeLower(String value) {
         return value == null ? "" : value.toLowerCase(Locale.ROOT);
     }
 
+    /**
+     * Treats blank filters as matches and nonblank filters as contains checks.
+     */
     private static boolean containsIfPresent(String value, String filter) {
         return filter.isEmpty() || value.contains(filter);
     }
 
+    /**
+     * Shows a translated informational alert.
+     */
     private void showInfo(String titleKey, String messageKey, Object... args) {
         Alert a = new Alert(Alert.AlertType.INFORMATION);
         a.setTitle(i18n.getString(titleKey));
         a.setHeaderText(null);
         a.setContentText(i18n.getString(messageKey, args));
+        a.showAndWait();
+    }
+
+    /**
+     * Runs a database action and turns database exceptions into UI alerts.
+     */
+    private void runDatabaseAction(Runnable action) {
+        try {
+            action.run();
+        } catch (DatabaseException e) {
+            showDatabaseError(e);
+        }
+    }
+
+    /**
+     * Shows a translated database error alert.
+     */
+    private void showDatabaseError(DatabaseException e) {
+        Alert a = new Alert(Alert.AlertType.ERROR);
+        a.setTitle(i18n.getString("alert.database.title"));
+        a.setHeaderText(null);
+        a.setContentText(i18n.getString(e.getMessageKey(), e.getOperation()));
         a.showAndWait();
     }
 }
